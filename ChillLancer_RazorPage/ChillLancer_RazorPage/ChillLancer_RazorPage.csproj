@@ -12,4 +12,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\vendor\bootstrap\css\" />
+    <Folder Include="wwwroot\vendor\aos\" />
+    <Folder Include="wwwroot\vendor\bootstrap\icons\" />
+    <Folder Include="wwwroot\vendor\glightbox\" />
+    <Folder Include="wwwroot\vendor\swiper\" />
+  </ItemGroup>
+
 </Project>

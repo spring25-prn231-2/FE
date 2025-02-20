@@ -28,6 +28,7 @@
 
     <!-- Main CSS File -->
     <link href="~/css/main.css" rel="stylesheet">
+    <link href="~/css/category-bar.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: Sailor
@@ -39,7 +40,7 @@
 </head>
 
 <body class="index-page">
-    <header id="header" class="header d-flex align-items-center sticky-top" style="z-index:1000">
+    <header id="header" class="header sticky-top align-items-center" style="z-index:1000">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
             <a asp-page="/Index" asp-area="" class="logo d-flex align-items-center me-auto">
@@ -52,6 +53,16 @@
                 <ul>
                     <li><a asp-page="/Index" class="@(currentPage == "/Index" ? "active" : "")">Home</a></li>
                     <li><a asp-page="/About" class="@(currentPage == "/About" ? "active" : "")">About</a></li>
+                    <li class="dropdown d-block d-xl-none">
+                        <a a asp-page="/About"><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a href="#">Deep Dropdown 1</a></li>
+                            <li><a href="#">Deep Dropdown 2</a></li>
+                            <li><a href="#">Deep Dropdown 3</a></li>
+                            <li><a href="#">Deep Dropdown 4</a></li>
+                            <li><a href="#">Deep Dropdown 5</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
@@ -74,8 +85,89 @@
             </nav>
 
             <a class="btn-getstarted" href="#">Get Started</a>
-
         </div>
+
+        @* ================================[ Categories Nav Bar]=================================== *@
+        <nav class="navmenu navbar-light bg-light d-none d-xl-block" style="border: groove 1px #000000;">
+            <div class="container-fluid container-xl position-relative">
+                <ul class="scroll-btn left-arrow">
+                    <li><a class="scroll-btn left-arrow" aria-label="Scroll left"><i class="bi bi-chevron-bar-left" style="font-size: 40px;"></i></a></li>
+                </ul>
+
+                <div class="nav-items-wrapper" style="overflow-x: hidden;">
+                    <ul class="nav-items" style="transition: transform 0.3s ease;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="designDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Graphics & Design
+                            </a>
+                            <ul aria-labelledby="designDropdown">
+                                <li><a href="#">Logo Design</a></li>
+                                <li><a href="#">Brand Style Guides</a></li>
+                                <li><a href="#">Business Cards & Stationery</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="techDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Programming & Tech
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="techDropdown">
+                                <li><a class="dropdown-item" href="#">Website Development</a></li>
+                                <li><a class="dropdown-item" href="#">E-Commerce</a></li>
+                                <li><a class="dropdown-item" href="#">WordPress</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li><a href="testimonials.html">Testimonials</a></li>
+                                <li class="dropdown">
+                                    <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                    <ul>
+                                        <li><a href="#">Deep Dropdown 1</a></li>
+                                        <li><a href="#">Deep Dropdown 2</a></li>
+                                        <li><a href="#">Deep Dropdown 3</a></li>
+                                        <li><a href="#">Deep Dropdown 4</a></li>
+                                        <li><a href="#">Deep Dropdown 5</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 3</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 5</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 6</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 7</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 8</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 9</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 10</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Category 11</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <ul class="scroll-btn right-arrow">
+                    <li><a class="scroll-btn right-arrow" aria-label="Scroll right"><i class="bi bi-chevron-bar-right" style="font-size: 40px;"></i></a></li>
+                </ul>
+
+            </div>
+        </nav>
     </header>
 
     @RenderBody()
@@ -145,7 +237,7 @@
                 <!-- You can delete the links only if you've purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon</a>
             </div>
         </div>
 
@@ -170,6 +262,8 @@
 
     <!-- Main JS File -->
     <script src="~/js/main.js"></script>
+
+    <script src="~/js/category-bar.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

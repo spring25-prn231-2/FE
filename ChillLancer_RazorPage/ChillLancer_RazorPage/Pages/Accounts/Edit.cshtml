@@ -1,0 +1,164 @@
+﻿@page
+@model WebApplication1.Pages.Accounts.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Account.Id" />
+            <div class="form-group">
+                <label asp-for="Account.AvatarUrl" class="control-label"></label>
+                <input asp-for="Account.AvatarUrl" class="form-control" />
+                <span asp-validation-for="Account.AvatarUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.FirebaseUid" class="control-label"></label>
+                <input asp-for="Account.FirebaseUid" class="form-control" />
+                <span asp-validation-for="Account.FirebaseUid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.FcmToken" class="control-label"></label>
+                <input asp-for="Account.FcmToken" class="form-control" />
+                <span asp-validation-for="Account.FcmToken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.GoogleId" class="control-label"></label>
+                <input asp-for="Account.GoogleId" class="form-control" />
+                <span asp-validation-for="Account.GoogleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.FacebookId" class="control-label"></label>
+                <input asp-for="Account.FacebookId" class="form-control" />
+                <span asp-validation-for="Account.FacebookId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Account.NameTag" class="control-label"></label>
+                <input asp-for="Account.NameTag" class="form-control" />
+                <span asp-validation-for="Account.NameTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.IdentityCode" class="control-label"></label>
+                <input asp-for="Account.IdentityCode" class="form-control" />
+                <span asp-validation-for="Account.IdentityCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Account.FullName" class="control-label"></label>
+                <input asp-for="Account.FullName" class="form-control" />
+                <span asp-validation-for="Account.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Account.Email" class="control-label"></label>
+                <input asp-for="Account.Email" class="form-control" />
+                <span asp-validation-for="Account.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Account.Password" class="control-label"></label>
+                <input asp-for="Account.Password" class="form-control" />
+                <span asp-validation-for="Account.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.PhoneNumber" class="control-label"></label>
+                <input asp-for="Account.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Account.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Address" class="control-label"></label>
+                <input asp-for="Account.Address" class="form-control" />
+                <span asp-validation-for="Account.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.DateOfBirth" class="control-label"></label>
+                <input asp-for="Account.DateOfBirth" class="form-control" />
+                <span asp-validation-for="Account.DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Gender" class="control-label"></label>
+                <input asp-for="Account.Gender" class="form-control" />
+                <span asp-validation-for="Account.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.National" class="control-label"></label>
+                <input asp-for="Account.National" class="form-control" />
+                <span asp-validation-for="Account.National" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.BioSummary" class="control-label"></label>
+                <input asp-for="Account.BioSummary" class="form-control" />
+                <span asp-validation-for="Account.BioSummary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.CompanyName" class="control-label"></label>
+                <input asp-for="Account.CompanyName" class="form-control" />
+                <span asp-validation-for="Account.CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.CompanyWebsite" class="control-label"></label>
+                <input asp-for="Account.CompanyWebsite" class="form-control" />
+                <span asp-validation-for="Account.CompanyWebsite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Favorited" class="control-label"></label>
+                <input asp-for="Account.Favorited" class="form-control" />
+                <span asp-validation-for="Account.Favorited" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Liked" class="control-label"></label>
+                <input asp-for="Account.Liked" class="form-control" />
+                <span asp-validation-for="Account.Liked" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Dislike" class="control-label"></label>
+                <input asp-for="Account.Dislike" class="form-control" />
+                <span asp-validation-for="Account.Dislike" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Account.IsVerified" /> @Html.DisplayNameFor(model => model.Account.IsVerified)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.LastDelivery" class="control-label"></label>
+                <input asp-for="Account.LastDelivery" class="form-control" />
+                <span asp-validation-for="Account.LastDelivery" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.JoinedDate" class="control-label"></label>
+                <input asp-for="Account.JoinedDate" class="form-control" />
+                <span asp-validation-for="Account.JoinedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Role" class="control-label"></label>
+                <input asp-for="Account.Role" class="form-control" />
+                <span asp-validation-for="Account.Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Status" class="control-label"></label>
+                <input asp-for="Account.Status" class="form-control" />
+                <span asp-validation-for="Account.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChillLancer_RazorPage", "ChillLancer_RazorPage\ChillLancer_RazorPage.csproj", "{74EED42C-1843-4325-9F97-966AEE4A5AD2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChillLancer.Repository", "..\..\aa\ChillLancer\ChillLancer.Repository\ChillLancer.Repository.csproj", "{1AEE9A8E-39D4-4B46-90C4-7916C3F4D540}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{74EED42C-1843-4325-9F97-966AEE4A5AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74EED42C-1843-4325-9F97-966AEE4A5AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74EED42C-1843-4325-9F97-966AEE4A5AD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEE9A8E-39D4-4B46-90C4-7916C3F4D540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEE9A8E-39D4-4B46-90C4-7916C3F4D540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEE9A8E-39D4-4B46-90C4-7916C3F4D540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEE9A8E-39D4-4B46-90C4-7916C3F4D540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

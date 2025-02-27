@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ChillLancer.Repository;
-using ChillLancer.Repository.Models;
+using ChillLancer_RazorPage.Model;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {
@@ -29,7 +27,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
             //}
         }
 
-        public IList<Account> Accounts { get;set; } = default!;
+        public IList<AccountModel> Accounts { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
@@ -44,8 +42,8 @@ namespace ChillLancer_RazorPage.Pages.Accounts
             var result = await _httpClient.GetAsync(requestUrl);
 
             Accounts = result.IsSuccessStatusCode
-                    ? await result.Content.ReadFromJsonAsync<List<Account>>() ?? new List<Account>()
-                    : new List<Account>();
+                    ? await result.Content.ReadFromJsonAsync<List<AccountModel>>() ?? new List<AccountModel>()
+                    : new List<AccountModel>();
         }
     }
 }

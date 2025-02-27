@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ChillLancer.Repository;
-using ChillLancer.Repository.Models;
+using ChillLancer_RazorPage.Model;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {
@@ -28,7 +27,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
         }
 
         [BindProperty]
-        public Account Account { get; set; } = default!;
+        public AccountModel Account { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()

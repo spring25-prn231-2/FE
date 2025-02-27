@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Account\**" />
+    <Content Remove="Pages\Account\**" />
+    <EmbeddedResource Remove="Pages\Account\**" />
+    <None Remove="Pages\Account\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,16 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Account\" />
     <Folder Include="wwwroot\vendor\bootstrap\css\" />
     <Folder Include="wwwroot\vendor\aos\" />
     <Folder Include="wwwroot\vendor\bootstrap\icons\" />
     <Folder Include="wwwroot\vendor\glightbox\" />
     <Folder Include="wwwroot\vendor\swiper\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\aa\ChillLancer\ChillLancer.Repository\ChillLancer.Repository.csproj" />
   </ItemGroup>
 
 </Project>

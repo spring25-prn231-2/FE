@@ -1,32 +1,46 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const storageKey = 'categoryData';
-    const serverUrl = 'https://localhost:7225/api'
-    const apiUrl = serverUrl + '/category';
+    const storageKeyCategory = 'categoryStorage';
+    const storageKeyTimestamp = 'fetchedDate';
+    const serverUrl = window.serverUrl;
+    const apiUrl = serverUrl + '/api/category';
+
+    // Check current date with the last fetched date
+    function validateFetchData() {
+        const lastFetch = localStorage.getItem(storageKeyTimestamp);
+        if (!lastFetch) return false;   //If null, false...
+
+        const lastFetchDate = new Date(lastFetch).toDateString();
+        const todayDate = new Date().toDateString();
+
+        return lastFetchDate === todayDate; // Only fetch if today is newer lastFetch
+    }
 
     // Check data in localStorage
-    const savedData = localStorage.getItem(storageKey);
-    const now = new Date().getTime();
-
-    if (savedData) {
-        const { data, timestamp } = JSON.parse(savedData);
-        if (now - timestamp < 86400000) { // 1 ngày = 86400000 ms
-            renderCategories(data);
-            return;
+    if (validateFetchData() === false) {
+        fetchAndStoreCategories();
+    } else {
+        const savedData = localStorage.getItem(storageKeyCategory);
+        if (savedData) {
+            renderCategories(JSON.parse(savedData));
+        } else {
+            console.log("No cached category data found.");
+            fetchAndStoreCategories(); // Fetch nếu dữ liệu bị mất
         }
     }
 
-    // Fetch API if not available
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            // Save to localStorage
-            localStorage.setItem(storageKey, JSON.stringify({
-                data: data,
-                timestamp: now
-            }));
-            renderCategories(data);
-        })
-        .catch(error => console.error('Error fetching categories:', error));
+    // Fetch API Category Method
+    function fetchAndStoreCategories() {
+        console.log("Fetching category data...");
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Save to localStorage
+                localStorage.setItem(storageKeyCategory, JSON.stringify(data));
+                localStorage.setItem(storageKeyTimestamp, new Date().toISOString());
+                renderCategories(data);
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
 
     function renderCategories(categories) {
         const container = document.querySelector('.categories-list');

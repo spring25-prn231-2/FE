@@ -184,7 +184,11 @@
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Preloader -->
+    <!-- Load Category Data -->
+    <script>window.serverUrl = "@ViewData["ServerUrl"]";</script>
+    <script src="~/js/category-bar.js"></script>
+
+    <!-- Loading Screen -->
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
@@ -201,7 +205,7 @@
     <!-- Main JS File -->
     <script src="~/js/main.js"></script>
 
-    <script src="~/js/category-bar.js"></script>
+    <script src="~/js/skill-language-silent-load.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

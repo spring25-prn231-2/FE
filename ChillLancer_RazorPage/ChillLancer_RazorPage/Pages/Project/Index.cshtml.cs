@@ -36,7 +36,7 @@ namespace ChillLancer_RazorPage.Pages.Project
 
                 string requestUrl = string.Empty;
 
-                requestUrl = $"https://localhost:7225/api/project/projects";
+                requestUrl = $"https://localhost:7225/projects";
                 //switch (customerId, EmployeeId)
                 //{
                 //    case (not null, _):

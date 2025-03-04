@@ -1,0 +1,39 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Project.ProposalsModel
+@{
+    ViewData["Title"] = "Proposals";
+}
+
+<link rel="stylesheet" href="/css/proposals.css" />
+
+<div class="project-header">
+    <h2>@Model.Project.Title</h2>
+    <ul class="nav-tabs">
+        <li><a asp-page="Details">Details</a></li>
+        <li class="active"><a asp-page="Proposals">Proposals</a></li>
+    </ul>
+</div>
+<div class="project-info">
+    <span><strong>Bids:</strong> @Model.Project.Budget</span>
+    <span><strong>Open duration:</strong> @Model.Project.Duration days</span>
+</div>
+<div class="proposal-list">
+    @foreach (var proposal in Model.Proposals)
+    {
+        <div class="proposal-card">
+            <div class="freelancer-info">
+                @* <img src="@proposal.ProfileImageUrl" alt="@proposal.FreelancerName" class="avatar" /> *@
+                <div>
+                    <h4>@proposal.FreelancerName</h4>
+                </div>
+            </div>
+            <div class="proposal-content">
+                <p>@proposal.Description</p>
+            </div>
+            <div class="proposal-footer">
+                <span class="bid-amount">$@proposal.Price USD</span>
+                <span class="delivery-time">Deliver in @proposal.DeliveryTime days</span>
+            </div>
+        </div>
+    }
+</div>

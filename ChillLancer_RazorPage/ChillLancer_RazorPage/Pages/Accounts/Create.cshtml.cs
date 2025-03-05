@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ChillLancer_RazorPage.Model;
+using ChillLancer_RazorPage.Models;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {

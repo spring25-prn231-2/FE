@@ -1,4 +1,4 @@
-using ChillLancer_RazorPage.Model;
+using ChillLancer_RazorPage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;

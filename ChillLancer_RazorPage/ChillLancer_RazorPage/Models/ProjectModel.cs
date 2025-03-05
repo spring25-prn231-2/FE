@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ChillLancer_RazorPage.Model
+namespace ChillLancer_RazorPage.Models
 {
     public class ProjectModel
     {

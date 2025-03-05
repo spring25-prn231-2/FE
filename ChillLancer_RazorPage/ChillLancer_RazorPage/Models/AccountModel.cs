@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Transactions;
 
-namespace ChillLancer_RazorPage.Model
+namespace ChillLancer_RazorPage.Models
 {
     public class AccountModel
     {

@@ -54,13 +54,9 @@
                     <li><a asp-page="/Index" class="@(currentPage == "/Index" ? "active" : "")">Home</a></li>
                     <li><a asp-page="/About" class="@(currentPage == "/About" ? "active" : "")">About</a></li>
                     <li class="dropdown d-block d-xl-none">
-                        <a a asp-page="/About"><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="#">Deep Dropdown 1</a></li>
-                            <li><a href="#">Deep Dropdown 2</a></li>
-                            <li><a href="#">Deep Dropdown 3</a></li>
-                            <li><a href="#">Deep Dropdown 4</a></li>
-                            <li><a href="#">Deep Dropdown 5</a></li>
+                        <a><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul class="categories-mobile-nav">
+                            @* =====[ Render By renderNavCategoriesMobile() in category-bar.js ]===== *@
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -97,8 +93,8 @@
 
                 <div class="categories-nav-wrapper">
                     <nav class="categories-navbar">
-                        <ul class="categories-list">
-                            @* =====[ Render By category-bar.js ]===== *@
+                        <ul class="categories-nav">
+                            @* =====[ Render By renderNavCategories() in category-bar.js ]===== *@
                         </ul>
                     </nav>
                 </div>

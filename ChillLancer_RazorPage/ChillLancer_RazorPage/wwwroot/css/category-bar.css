@@ -16,7 +16,7 @@
     overflow: hidden;
 }
 
-.categories-list {
+.categories-nav {
     display: flex;
     list-style: none;
     margin: 0;

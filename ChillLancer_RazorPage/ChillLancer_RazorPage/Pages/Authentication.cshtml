@@ -36,7 +36,7 @@
 
             @* Login Form *@
             <div class="global-style form-container sign-in">
-                <form class="global-style">
+                <form class="global-style" method="post">
                     <h1 class="global-style">Sign In</h1>
                     <div class="global-style social-icons">
                         <a href="#" class="global-style  icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -45,10 +45,10 @@
                         <a href="#" class="global-style  icon"><i class="fa-brands fa-linkedin-in"></i></a>
                     </div>
                     <span class="global-style">or use your email password</span>
-                    <input class="global-style" type="email" placeholder="Email">
-                    <input class="global-style" type="password" placeholder="Password">
+                    <input class="global-style" type="email" asp-for="AuthRequest.Email" placeholder="Email">
+                    <input class="global-style" type="password" asp-for="AuthRequest.Password" placeholder="Password">
                     <a class="global-style" href="#">Forget Your Password?</a>
-                    <button class="global-style btn-primary-color">Login</button>
+                    <button class="global-style btn-primary-color" type="submit">Login</button>
                 </form>
             </div>
 

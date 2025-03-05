@@ -25,18 +25,22 @@ namespace ChillLancer_RazorPage.Pages.Project
             }
 
             public IList<ProjectModel> Projects { get; set; } = new List<ProjectModel>();
-            //public int EmployeeId { get; set; }
+            [BindProperty]
+            public string EmployerId { get; set; }
+            public string EmployerName { get; set; }
 
             public async Task OnGetAsync()
             {
                 //_httpContextAccessor.HttpContext?.Session.Remove("AppointmentId");
 
                 //int? customerId = _httpContextAccessor.HttpContext?.Session.GetInt32("CustomerId");
-                //EmployeeId = _httpContextAccessor.HttpContext?.Session.GetInt32("EmpId") ?? 0;
-
+                string EmpId = _httpContextAccessor.HttpContext?.Session.GetString("EmpId") ?? "";
+                EmployerId = EmpId.Trim();
+                string EmpName = _httpContextAccessor.HttpContext?.Session.GetString("EmpName") ?? "";
+                EmployerName = EmpName.Trim();
                 string requestUrl = string.Empty;
 
-                requestUrl = $"https://localhost:7225/projects";
+                requestUrl = $"https://localhost:7225/api/project";
                 //switch (customerId, EmployeeId)
                 //{
                 //    case (not null, _):

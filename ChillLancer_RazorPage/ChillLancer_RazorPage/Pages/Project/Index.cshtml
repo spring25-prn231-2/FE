@@ -5,10 +5,16 @@
 }
 
 <h1>Projects</h1>
+@if (Model.EmployerId != "null")
+{
+    <div style="font-size: 32px; font-weight: bold; text-align: right;">
+        Welcome, @Model.EmployerName
+    </div>
 
-<p>
-    <a asp-page="Create" class="btn btn-primary">Create New Project</a>
-</p>
+}
+ @* <p>
+     <a asp-page="Create" class="btn btn-primary">Create New Project</a>
+ </p> *@
 
 @if (Model.Projects.Any())
 {

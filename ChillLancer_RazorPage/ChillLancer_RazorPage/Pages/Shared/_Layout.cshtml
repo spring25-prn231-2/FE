@@ -59,7 +59,7 @@
                             @* =====[ Render By renderNavCategoriesMobile() in category-bar.js ]===== *@
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    @* <li class="dropdown">
                         <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="testimonials.html">Testimonials</a></li>
@@ -74,7 +74,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li> *@
                     <li><a asp-page="/Pricing" class="@(currentPage == "/Pricing" ? "active" : "")">Pricing</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -133,20 +133,21 @@
                     <ul>
                         <li><a asp-page="/Index">Home</a></li>
                         <li><a asp-page="/About">About us</a></li>
-                        <li><a href="#">Services</a></li>
+                        <li><a asp-page="/Pricing">Subscription</a></li>
+                        @* <li><a href="#">Services</a></li>
                         <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Privacy policy</a></li> *@
                     </ul>
                 </div>
 
                 <div class="col-lg-2 col-md-3 footer-links">
                     <h4>Our Services</h4>
                     <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
+                        <li><a href="/Categories?majorName=Programming & Tech">Programming & Tech</a></li>
+                        <li><a href="/Categories?majorName=Music & Audio">Music & Audio</a></li>
+                        <li><a href="/Categories?majorName=Business">Business</a></li>
+                        <li><a href="/Categories?majorName=Digital Marketing">Digital Marketing</a></li>
+                        <li><a href="/Categories?majorName=Graphics & Design">Graphics & Design</a></li>
                     </ul>
                 </div>
 

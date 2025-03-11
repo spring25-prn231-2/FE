@@ -3,7 +3,7 @@ using ChillLancer_RazorPage.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ChillLancer_RazorPage.Pages.Admin.Management
+namespace ChillLancer_RazorPage.Pages.Admin.System
 {
     public class CategoriesModel : PageModel
     {
@@ -16,7 +16,7 @@ namespace ChillLancer_RazorPage.Pages.Admin.Management
             _configuration = configuration;
         }
 
-        public List<CategoryVM> Categories { get; set; } = new List<CategoryVM>();
+        public List<CategoryVM> Categories { get; set; } = [];
 
         [BindProperty]
         public CategoryVM Category { get; set; } = new CategoryVM();
@@ -28,7 +28,7 @@ namespace ChillLancer_RazorPage.Pages.Admin.Management
         public async Task OnGetAsync()
         {
             var serverUrl = _configuration["ServerUrl"];
-            var apiUrl = $"{serverUrl}/api/category/list?PageSize=999";
+            var apiUrl = $"{serverUrl}/api/category/list?PageSize=999&status=exceptdeleted";
 
             try
             {
@@ -66,9 +66,10 @@ namespace ChillLancer_RazorPage.Pages.Admin.Management
                     Content = JsonContent.Create(Category)
                 };
                 var response = await _httpClient.SendAsync(request);
+                var message = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
                 {
-                    ModelState.AddModelError(string.Empty, "Update Failed!");
+                    ModelState.AddModelError(string.Empty, message);
                     await OnGetAsync();
                     return Page();
                 }
@@ -86,7 +87,7 @@ namespace ChillLancer_RazorPage.Pages.Admin.Management
             var message = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
-                ModelState.AddModelError(string.Empty, "Delete Failed!");
+                ModelState.AddModelError(string.Empty, message);
             }
             return RedirectToPage();
         }

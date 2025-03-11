@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ChillLancer.Repository;
-using ChillLancer.Repository.Models;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {
@@ -28,7 +27,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
         }
 
         [BindProperty]
-        public Account Account { get; set; } = default!;
+        public AccountCreateDto Account { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -38,7 +37,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
                 return Page();
             }
 
-            //result = await _httpClient.GetAsync(ApplicationEndpoint.Endpoint);
+            var result = await _httpClient.PostAsJsonAsync(EndpointConst.baseUrl + EndpointConst.account, Account);
             //if (result.StatusCode == System.Net.HttpStatusCode.OK)
             //{
             //    var stylists = result.Content.ReadFromJsonAsync<List<Entity>>().Result;
@@ -51,6 +50,13 @@ namespace ChillLancer_RazorPage.Pages.Accounts
             //}
 
             //var result = await _httpClient.PostAsync(ApplicationEndpoint.Endpoint, JsonContent.Create("string"));
+            //if (result.IsSuccessStatusCode)
+            //{
+
+            //}
+            //else
+            //{
+            //}
 
             return RedirectToPage("./Index");
         }

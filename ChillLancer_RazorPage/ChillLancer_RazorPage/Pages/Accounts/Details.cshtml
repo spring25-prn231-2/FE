@@ -1,5 +1,5 @@
 ﻿@page
-@model WebApplication1.Pages.Accounts.DetailsModel
+@model ChillLancer_RazorPage.Pages.Accounts.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -64,12 +64,6 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Account.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Account.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Account.Password)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Account.PhoneNumber)

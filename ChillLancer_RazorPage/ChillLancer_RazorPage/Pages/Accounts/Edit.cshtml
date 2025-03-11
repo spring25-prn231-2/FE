@@ -1,5 +1,5 @@
 ﻿@page
-@model WebApplication1.Pages.Accounts.EditModel
+@model ChillLancer_RazorPage.Pages.Accounts.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -61,12 +61,6 @@
                 <label asp-for="Account.Email" class="control-label"></label>
                 <input asp-for="Account.Email" class="form-control" />
                 <span asp-validation-for="Account.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Account.Password" class="control-label"></label>
-                <input asp-for="Account.Password" class="form-control" />
-                <span asp-validation-for="Account.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Account.PhoneNumber" class="control-label"></label>

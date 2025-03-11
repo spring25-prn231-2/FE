@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ChillLancer.Repository;
-using ChillLancer.Repository.Models;
 
-namespace WebApplication1.Pages.Accounts
+namespace ChillLancer_RazorPage.Pages.Accounts
 {
     public class EditModel : PageModel
     {
@@ -31,7 +29,7 @@ namespace WebApplication1.Pages.Accounts
         }
 
         [BindProperty]
-        public Account Account { get; set; } = default!;
+        public AccountDto Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -40,7 +38,7 @@ namespace WebApplication1.Pages.Accounts
                 return NotFound();
             }
 
-            var account = new Account();
+            var account = new AccountDto();
             /*await _httpClient.GetAsync(ApplicationEndpoint.GetByIdEndPoint + id)*/
             if (account == null)
             {

@@ -48,7 +48,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var category in Model.Categories)
+                                @foreach (var category in Model.CategoriesList)
                                 {
                                     <tr>
                                         <td>@category.MajorName</td>
@@ -62,7 +62,7 @@
                                         </button>
                                             <form method="post" asp-page-handler="Delete" style="display:inline">
                                                 <input type="hidden" name="id" value="@category.Id" />
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Delete</button>
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -81,22 +81,22 @@
                                         </div>
                                         <div class="modal-body">
                                             <input type="hidden" id="isEdit" asp-for="IsEdit" />
-                                            <input type="hidden" id="categoryId" asp-for="Category.Id" value="" />
+                                            <input type="hidden" id="categoryId" asp-for="CategoryObj.Id" value="" />
                                             <div class="mb-3">
-                                                <label asp-for="Category.MajorName" class="form-label">Major Name</label>
-                                                <input type="text" class="form-control" id="majorName" asp-for="Category.MajorName" required />
+                                                <label asp-for="CategoryObj.MajorName" class="form-label">Major Name</label>
+                                                <input type="text" class="form-control" id="majorName" asp-for="CategoryObj.MajorName" required />
                                             </div>
                                             <div class="mb-3">
-                                                <label asp-for="Category.BriefName" class="form-label">Brief Name</label>
-                                                <input type="text" class="form-control" id="briefName" asp-for="Category.BriefName" required />
+                                                <label asp-for="CategoryObj.BriefName" class="form-label">Brief Name</label>
+                                                <input type="text" class="form-control" id="briefName" asp-for="CategoryObj.BriefName" required />
                                             </div>
                                             <div class="mb-3">
-                                                <label asp-for="Category.SpecializedName" class="form-label">Specialized Name</label>
-                                                <input type="text" class="form-control" id="specializedName" asp-for="Category.SpecializedName" required />
+                                                <label asp-for="CategoryObj.SpecializedName" class="form-label">Specialized Name</label>
+                                                <input type="text" class="form-control" id="specializedName" asp-for="CategoryObj.SpecializedName" required />
                                             </div>
                                             <div class="mb-3" id="statusGroup">
-                                                <label asp-for="Category.Status" class="form-label">Status</label>
-                                                <select class="form-select" id="status" asp-for="Category.Status">
+                                                <label asp-for="CategoryObj.Status" class="form-label">Status</label>
+                                                <select class="form-select" id="status" asp-for="CategoryObj.Status">
                                                     <option value="Update">Updated</option>
                                                     <option value="Inactive">Inactive</option>
                                                 </select>
@@ -133,6 +133,7 @@
             categoryModal.querySelector('#specializedName').value = '';
 
             categoryModal.querySelector('#statusGroup').classList.add('d-none');
+            categoryModal.querySelector('#status').value = '';
         } else {
             var id = button.getAttribute('data-id');
             var major = button.getAttribute('data-major');

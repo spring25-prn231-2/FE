@@ -16,10 +16,10 @@ namespace ChillLancer_RazorPage.Pages.Admin.System
             _configuration = configuration;
         }
 
-        public List<CategoryVM> Categories { get; set; } = [];
+        public List<CategoryVM> CategoriesList { get; set; } = [];
 
         [BindProperty]
-        public CategoryVM Category { get; set; } = new CategoryVM();
+        public CategoryVM CategoryObj { get; set; } = new CategoryVM();
 
         [BindProperty]
         public bool IsEdit { get; set; } = false;
@@ -35,7 +35,7 @@ namespace ChillLancer_RazorPage.Pages.Admin.System
                 var response = await _httpClient.GetFromJsonAsync<ListResponse<CategoryVM>>(apiUrl);
                 if (response != null && response.DataList != null)
                 {
-                    Categories = response.DataList;
+                    CategoriesList = response.DataList;
                 }
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace ChillLancer_RazorPage.Pages.Admin.System
 
             if (!IsEdit)
             {
-                var response = await _httpClient.PostAsJsonAsync(apiUrl, Category);
+                var response = await _httpClient.PostAsJsonAsync(apiUrl, CategoryObj);
                 if (!response.IsSuccessStatusCode)
                 {
                     ModelState.AddModelError(string.Empty, "Add New Failed!");
@@ -63,7 +63,7 @@ namespace ChillLancer_RazorPage.Pages.Admin.System
             {
                 var request = new HttpRequestMessage(new HttpMethod("PATCH"), apiUrl)
                 {
-                    Content = JsonContent.Create(Category)
+                    Content = JsonContent.Create(CategoryObj)
                 };
                 var response = await _httpClient.SendAsync(request);
                 var message = await response.Content.ReadAsStringAsync();

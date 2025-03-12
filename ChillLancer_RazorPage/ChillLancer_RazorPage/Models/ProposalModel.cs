@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace ChillLancer_RazorPage.Model
+namespace ChillLancer_RazorPage.Models
 {
     public class ProposalModel
     {

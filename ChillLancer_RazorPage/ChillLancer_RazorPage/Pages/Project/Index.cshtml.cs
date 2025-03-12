@@ -54,7 +54,7 @@ namespace ChillLancer_RazorPage.Pages.Project
                 //}
 
                 var result = await _httpClient.GetAsync(requestUrl);
-                Projects = result.IsSuccessStatusCode
+                 Projects = result.IsSuccessStatusCode
                     ? await result.Content.ReadFromJsonAsync<List<ProjectModel>>() ?? new List<ProjectModel>()
                     : new List<ProjectModel>();
             }

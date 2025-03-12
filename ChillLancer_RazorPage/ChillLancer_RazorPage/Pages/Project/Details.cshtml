@@ -1,0 +1,12 @@
+﻿@page "{id:Guid}"
+@model ChillLancer_RazorPage.Pages.Project.DetailsModel
+@{
+    ViewData["Title"] = "Project Details";
+}
+<div class="project-header">
+    <h2>@Model.Project.Title</h2>
+    <ul class="nav-tabs">
+        <li><a asp-page="Details">Details</a></li>
+        <li class="active"><a asp-page="Proposals">Proposals</a></li>
+    </ul>
+</div>

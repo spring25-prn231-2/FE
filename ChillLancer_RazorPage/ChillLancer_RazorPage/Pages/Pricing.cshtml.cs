@@ -1,12 +1,33 @@
+using ChillLancer_RazorPage.Models;
+using ChillLancer_RazorPage.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ChillLancer_RazorPage.Pages
 {
-    public class PricingModel : PageModel
+    public class PricingModel(HttpClient httpClient, IConfiguration configuration) : PageModel
     {
-        public void OnGet()
+        private readonly HttpClient _httpClient = httpClient;
+        private readonly IConfiguration _configuration = configuration;
+        public List<PackageModel> Packages { get; set; } = [];
+        public async Task<IActionResult> OnGetAsync()
         {
+            var serverUrl = _configuration["ServerUrl"];
+            var apiUrl = $"{serverUrl}/api/package";
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<PackageModel>>(apiUrl);
+                if (response != null)
+                {
+                    Packages = response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Fetch packages error: " + ex.Message);
+            }
+            return Page();
         }
+
     }
 }

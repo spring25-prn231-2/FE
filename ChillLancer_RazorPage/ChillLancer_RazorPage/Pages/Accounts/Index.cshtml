@@ -133,7 +133,7 @@
                             @Html.DisplayFor(modelItem => item.Address)
                         </td>
                         <td>
-                            @DateOnly.FromDateTime(item.DateOfBirth.Value)
+                            @(item.DateOfBirth.HasValue ? DateOnly.FromDateTime(item.DateOfBirth.Value) : "00/00/0000")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Gender)
@@ -163,10 +163,10 @@
                             @Html.DisplayFor(modelItem => item.IsVerified)
                         </td>
                         <td>
-                            @DateOnly.FromDateTime(item.LastDelivery.Value)
+                            @(item.LastDelivery.HasValue ? DateOnly.FromDateTime(item.LastDelivery.Value) : "00/00/0000"))
                         </td>
                         <td>
-                            @DateOnly.FromDateTime(item.JoinedDate)
+                            @(item.JoinedDate.HasValue ? DateOnly.FromDateTime(item.JoinedDate.Value) : "00/00/0000")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Role)

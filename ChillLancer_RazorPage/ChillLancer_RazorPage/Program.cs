@@ -1,3 +1,5 @@
+using ChillLancer_RazorPage;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +13,7 @@ builder.Services.AddSession(opt =>
 });
 
 builder.Services.AddHttpClient();
+builder.Services.Configure<GlobalConfig>(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 

@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ChillLancer_RazorPage.Models;
+using Newtonsoft.Json;
+using System.Text.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {
@@ -26,21 +30,58 @@ namespace ChillLancer_RazorPage.Pages.Accounts
             //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             //}
         }
+        [BindProperty]
+        public List<AccountDto> Accounts { get; set; } = new List<AccountDto>();
 
-        public IList<AccountDto> Accounts { get; set; } = default!;
+        // ... other code
 
         public async Task OnGetAsync()
         {
-            //_httpContextAccessor.HttpContext?.Session.Remove("Id");
+            try
+            {
+                var result = await _httpClient.GetAsync(EndpointConst.baseUrl + EndpointConst.account);
 
-            //int? customerId = _httpContextAccessor.HttpContext?.Session.GetInt32("Id");
-            //EmployeeId = _httpContextAccessor.HttpContext?.Session.GetInt32("Id") ?? 0;
+                if (result.IsSuccessStatusCode)
+                {
+                    var jsonString = await result.Content.ReadAsStringAsync();
+                    Console.WriteLine("Raw JSON Response: " + jsonString);
 
-            var result = await _httpClient.GetAsync(EndpointConst.baseUrl+EndpointConst.account);
+                    var response = JsonSerializer.Deserialize<ResponseModel>(jsonString,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            Accounts = result.IsSuccessStatusCode
-                    ? await result.Content.ReadFromJsonAsync<List<AccountDto>>() ?? new List<AccountDto>()
-                    : new List<AccountDto>();
+                    if (response is not null && response.value is not null && response.value.data is not null)
+                    {
+                        var dataJson = JsonSerializer.Serialize(response.value.data);
+                        Console.WriteLine("Raw JSON Data: " + dataJson);
+
+                        try
+                        {
+                            Accounts = JsonSerializer.Deserialize<List<AccountDto>>(dataJson,
+                                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error deserializing data: " + ex.Message);
+                            Console.WriteLine("Stack Trace: " + ex.StackTrace);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Response or data is null.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"API call failed with status: {result.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Stack Trace: " + ex.StackTrace);
+            }
         }
+
+
     }
 }

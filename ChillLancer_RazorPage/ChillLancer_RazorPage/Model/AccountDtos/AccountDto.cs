@@ -19,13 +19,13 @@ namespace ChillLancer_RazorPage.Model.AccountDtos
         [JsonPropertyName("facebook-id")]
         public string? FacebookId { get; set; }
         [JsonPropertyName("name-tag")]
-        public string NameTag { get; set; } = null!;
+        public string? NameTag { get; set; } // Nullable
         [JsonPropertyName("identity-code")]
         public string? IdentityCode { get; set; }
         [JsonPropertyName("full-name")]
-        public string FullName { get; set; } = null!;
+        public string? FullName { get; set; } // Nullable
         [JsonPropertyName("email")]
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; } // Nullable
         [JsonPropertyName("phone-number")]
         public string? PhoneNumber { get; set; }
         [JsonPropertyName("address")]
@@ -53,22 +53,10 @@ namespace ChillLancer_RazorPage.Model.AccountDtos
         [JsonPropertyName("last-delivery")]
         public DateTime? LastDelivery { get; set; }
         [JsonPropertyName("joined-date")]
-        public DateTime JoinedDate { get; set; }
+        public DateTime? JoinedDate { get; set; } // Nullable
         [JsonPropertyName("role")]
-        public string Role { get; set; } = null!;
+        public string? Role { get; set; } // Nullable
         [JsonPropertyName("status")]
-        public string Status { get; set; } = null!;
-
-        //======================[ Foreign Key ]======================
-        //public virtual ICollection<Certification>? Certifications { get; set; }
-        //public virtual ICollection<AccountLanguage>? AccountLanguages { get; set; }
-        //public virtual ICollection<Education>? Educations { get; set; }
-        //public virtual ICollection<Proposal>? Proposals { get; set; }
-        //public virtual ICollection<Project>? Projects { get; set; }
-        //public virtual ICollection<Transaction>? TransactionsAsFreelancer { get; set; }
-        //public virtual ICollection<Transaction>? TransactionsAsEmployer { get; set; }
-
-        //public virtual ICollection<ProjectContract>? ProjectContracts { get; set; }
-        //public virtual ICollection<PersonalContract>? PersonalContracts { get; set; }
+        public string? Status { get; set; } // Nullable
     }
 }

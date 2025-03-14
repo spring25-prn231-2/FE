@@ -6,6 +6,7 @@ using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ChillLancer_RazorPage.Models;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {
@@ -28,6 +29,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
 
         [BindProperty]
         public AccountCreateDto Account { get; set; } = default!;
+        public string ErrorMessage { get; set; }
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -38,27 +40,17 @@ namespace ChillLancer_RazorPage.Pages.Accounts
             }
 
             var result = await _httpClient.PostAsJsonAsync(EndpointConst.baseUrl + EndpointConst.account, Account);
-            //if (result.StatusCode == System.Net.HttpStatusCode.OK)
-            //{
-            //    var stylists = result.Content.ReadFromJsonAsync<List<Entity>>().Result;
-            //    availableStylist = stylists;
-            //    ViewData["Id"] = new SelectList(list, "Id", "Name");
-            //}
-            //else if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
-            //{
-
-            //}
-
-            //var result = await _httpClient.PostAsync(ApplicationEndpoint.Endpoint, JsonContent.Create("string"));
-            //if (result.IsSuccessStatusCode)
-            //{
-
-            //}
-            //else
-            //{
-            //}
-
-            return RedirectToPage("./Index");
+            var response = await result.Content.ReadFromJsonAsync<ResponseModel> ();
+            if (result.IsSuccessStatusCode)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                ErrorMessage = response.value.message;
+                return Page();
+            }
         }
+
     }
 }

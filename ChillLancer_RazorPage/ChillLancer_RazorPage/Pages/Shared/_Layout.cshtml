@@ -28,7 +28,8 @@
 
     <!-- Main CSS File -->
     <link href="~/css/main.css" rel="stylesheet">
-    <div></div>
+    <link href="~/css/category-bar.css" rel="stylesheet">
+
     <!-- =======================================================
     * Template Name: Sailor
     * Template URL: https://bootstrapmade.com/Sailor-free-bootstrap-theme/
@@ -39,7 +40,7 @@
 </head>
 
 <body class="index-page">
-    <header id="header" class="header d-flex align-items-center sticky-top" style="z-index:1000">
+    <header id="header" class="header sticky-top align-items-center" style="z-index:1000">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
             <a asp-page="/Index" asp-area="" class="logo d-flex align-items-center me-auto">
@@ -52,6 +53,12 @@
                 <ul>
                     <li><a asp-page="/Index" class="@(currentPage == "/Index" ? "active" : "")">Home</a></li>
                     <li><a asp-page="/About" class="@(currentPage == "/About" ? "active" : "")">About</a></li>
+                    <li class="dropdown d-block d-xl-none">
+                        <a><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul class="categories-mobile-nav">
+                            @* =====[ Render By renderNavCategoriesMobile() in category-bar.js ]===== *@
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
@@ -69,12 +76,32 @@
                         </ul>
                     </li>
                     <li><a asp-page="/Pricing" class="@(currentPage == "/Pricing" ? "active" : "")">Pricing</a></li>
+                    <li><a asp-page="/Project/Index" class="@(currentPage == "/Project" ? "active" : "")">Projects</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="btn-getstarted" href="#">Get Started</a>
+            <a class="btn-getstarted" href="/Authentication">Login</a>
+        </div>
 
+
+        @* ================================[ Categories Nav Bar]=================================== *@
+        <div id="CategoriesMenu" class="bg-light d-none d-xl-block" style="border: groove 1px #000000;">
+            <div class="container-fluid container-xl position-relative">
+
+                <a class="scroll-btn left-arrow"><i class="bi bi-chevron-bar-left" style="font-size: 40px;"></i></a>
+
+                <div class="categories-nav-wrapper">
+                    <nav class="categories-navbar">
+                        <ul class="categories-nav">
+                            @* =====[ Render By renderNavCategories() in category-bar.js ]===== *@
+                        </ul>
+                    </nav>
+                </div>
+
+                <a class="scroll-btn right-arrow"><i class="bi bi-chevron-bar-right" style="font-size: 40px;"></i></a>
+
+            </div>
         </div>
     </header>
 
@@ -145,7 +172,7 @@
                 <!-- You can delete the links only if you've purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon</a>
             </div>
         </div>
 
@@ -154,7 +181,11 @@
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Preloader -->
+    <!-- Load Category Data -->
+    <script>window.serverUrl = "@ViewData["ServerUrl"]";</script>
+    <script src="~/js/category-bar.js"></script>
+
+    <!-- Loading Screen -->
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
@@ -170,6 +201,8 @@
 
     <!-- Main JS File -->
     <script src="~/js/main.js"></script>
+
+    <script src="~/js/skill-language-silent-load.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

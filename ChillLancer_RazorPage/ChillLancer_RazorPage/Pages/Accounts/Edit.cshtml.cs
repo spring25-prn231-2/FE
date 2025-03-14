@@ -6,6 +6,7 @@ using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ChillLancer_RazorPage.Models;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {
@@ -29,7 +30,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
         }
 
         [BindProperty]
-        public AccountDto Account { get; set; } = default!;
+        public AccountModel Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -38,7 +39,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
                 return NotFound();
             }
 
-            var account = new AccountDto();
+            var account = new AccountModel();
             /*await _httpClient.GetAsync(ApplicationEndpoint.GetByIdEndPoint + id)*/
             if (account == null)
             {

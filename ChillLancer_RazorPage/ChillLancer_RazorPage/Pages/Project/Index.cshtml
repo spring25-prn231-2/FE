@@ -12,9 +12,12 @@
     </div>
 
 }
- @* <p>
-     <a asp-page="Create" class="btn btn-primary">Create New Project</a>
- </p> *@
+<p>
+    <button asp-page="Create" style="height:30px; width:100px; background-color:#DE444C; border:none; border-radius:3px; color:white"
+            onclick="location.href='@Url.Page("/Project/Create")'">
+        Create New
+    </button>
+</p>
 
 @if (Model.Projects.Any())
 {
@@ -22,11 +25,15 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Description</th>
+                <th>Guide lines</th>
                 <th>Budget</th>
-                <th>Duration (Days)</th>
                 <th>Start Date</th>
+                <th>End Date</th>
+                <th>Requirement Note</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Category</th>
+                <th>Skill</th>
             </tr>
         </thead>
         <tbody>
@@ -34,10 +41,17 @@
             {
                 <tr>
                     <td>@project.Title</td>
-                    <td>@project.Budget.ToString("C")</td>
-                    <td>@project.Duration</td>
+                    <td>@project.Description</td>
+                    <td>@project.Guidelines</td>
+                    <td>@project.Budget</td>
                     <td>@project.StartDate</td>
-                     @* <td>@project.Status</td> *@
+                    <td>@project.EndDate</td>
+                    <td>@project.RequirementNote</td>
+                    <td>@project.Status</td>
+                    <td>@project.CategoryName</td>
+                    <td>
+                        @(project.SkillName != null && project.SkillName.Any() ? string.Join(", ", project.SkillName) : "N/A")
+                    </td>
                     <td>
                         <a asp-page="Details" asp-route-id="@project.Id" class="btn btn-info btn-sm">Details</a>
                         <a asp-page="Edit" asp-route-id="@project.Id" class="btn btn-warning btn-sm">Edit</a>

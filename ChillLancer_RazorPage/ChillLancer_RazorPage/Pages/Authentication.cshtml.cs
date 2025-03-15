@@ -102,6 +102,18 @@ namespace ChillLancer_RazorPage.Pages
     {
         public Value value { get; set; }
     }
+    public class ResponseModelOne
+    {
+        public ValueOne value { get; set; }
+    }
+    public class ValueOne
+    {
+        public string token { get; set; }
+        public string message { get; set; }
+        public object data { get; set; }
+        [JsonPropertyName("status-code")]
+        public int code { get; set; }
+    }
 
     public class Value
     {

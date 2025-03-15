@@ -13,11 +13,11 @@ using System.Text.Json.Serialization;
 
 namespace ChillLancer_RazorPage.Pages.Project
 {
-    public class IndexModel : PageModel
+    public class EmployerModel : PageModel
     {
         private readonly HttpClient _httpClient;
 
-        public IndexModel(HttpClient httpClient)
+        public EmployerModel(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -32,7 +32,6 @@ namespace ChillLancer_RazorPage.Pages.Project
         {
             try
             {
-
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + HttpContext.Session.GetString("token"));
                 var result = await _httpClient.GetAsync(EndpointConst.baseUrl + "project/employer-projects");
                 if (result.IsSuccessStatusCode)

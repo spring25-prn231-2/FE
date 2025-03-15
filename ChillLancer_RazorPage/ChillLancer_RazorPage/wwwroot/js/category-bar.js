@@ -74,7 +74,9 @@
                         <li class="sub-categories-item category-brief-name">${briefName}
                             <ul class="group-sub-categories">
                             ${specializedNames.map(specName =>
-                    `<li class="sub-categories-item"><a href="#" class="specialized-link">${specName}</a></li>`
+                                `<li class="sub-categories-item">
+                                    <a href="/project?categoryName=${encodeURIComponent(specName)}" class="specialized-link">${specName}</a>
+                                </li>`
                 ).join('')}
                             </ul>
                         </li>`;

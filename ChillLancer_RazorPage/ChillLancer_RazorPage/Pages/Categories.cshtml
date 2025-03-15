@@ -16,7 +16,7 @@
                     <h5>@group.BriefName</h5>
                     @foreach (var category in group.SpecializedCategories)
                     {
-                        <a href="/project" class="sub-category-item">
+                        <a href="/project?categoryName=@category.SpecializedName" class="sub-category-item">
                             <div class="item-wrap-center-left">
                                 <i class="bi bi-caret-right-fill"></i>
                                 <span>@category.SpecializedName</span>

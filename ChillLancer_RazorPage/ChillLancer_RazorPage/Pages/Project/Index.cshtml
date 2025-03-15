@@ -1,9 +1,11 @@
 ﻿@page
 @model ChillLancer_RazorPage.Pages.Project.IndexModel
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Projects";
+    var categoryName = ViewData["CategoryName"] as string;
 }
-
+@*
 <h1>Projects</h1>
 @if (Model.EmployerId != "null")
 {
@@ -37,7 +39,7 @@
                     <td>@project.Budget.ToString("C")</td>
                     <td>@project.Duration</td>
                     <td>@project.StartDate</td>
-                     @* <td>@project.Status</td> *@
+                    @* <td>@project.Status</td>
                     <td>
                         <a asp-page="Details" asp-route-id="@project.Id" class="btn btn-info btn-sm">Details</a>
                         <a asp-page="Edit" asp-route-id="@project.Id" class="btn btn-warning btn-sm">Edit</a>
@@ -51,4 +53,96 @@
 else
 {
     <p>No projects found.</p>
-}
+} *@
+
+@*=============================================*@
+
+<main class="main">
+    <section class="section container">
+        <h2><b>Explore projects of @categoryName</b></h2>
+
+        @if (Model.ProjectList.Any())
+        {
+            <div class="grid-container">
+                @foreach (var proj in Model.ProjectList)
+                {
+                    <a class="card-container" href="/#">
+                        <h5>@proj.Title</h5>
+                        <div class="item-wrap-center-left">
+                            <i class="bi bi-caret-right-fill"></i>
+                            <span>Description: @proj.Description</span>
+                        </div>
+                        <div class="item-wrap-center-left">
+                            <i class="bi bi-caret-right-fill"></i>
+                            <span>Budget: @proj.Budget</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No projects found.</p>
+        }
+    </section>
+
+    @* Style For List Menu *@
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px; /* space between col & row */
+        }
+
+        @@media screen and (max-width: 1200px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @@media screen and (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+        }
+
+        @@media screen and (max-width: 576px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+
+        .card-container {
+            background-color: white;
+            padding: 1em;
+            padding-bottom: 1.1em;
+            border-radius: 15px;
+            margin: 1em;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
+
+        .sub-category-item {
+            display: block;
+            flex-direction: row;
+            padding: 0.5em 1em 0.5em;
+            justify-content: left;
+            border-radius: 10px;
+            transition: .4s ease-in-out;
+        }
+
+            .sub-category-item:hover {
+                cursor: pointer;
+                background-color: rgb(240,240,240);
+            }
+
+        .item-wrap-center {
+            display: flex;
+            position: relative;
+            margin-right: 1em;
+            align-self: center;
+        }
+    </style>
+</main>

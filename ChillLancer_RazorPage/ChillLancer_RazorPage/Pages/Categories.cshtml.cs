@@ -2,7 +2,6 @@ using ChillLancer_RazorPage.Models.ResponseModels;
 using ChillLancer_RazorPage.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NuGet.Protocol.Core.Types;
 
 namespace ChillLancer_RazorPage.Pages
 {

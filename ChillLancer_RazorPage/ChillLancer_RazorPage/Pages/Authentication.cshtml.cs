@@ -45,7 +45,7 @@ namespace ChillLancer_RazorPage.Pages
                 if (employee is not null)
                 {
                     _httpContextAccessor.HttpContext?.Session.SetString("token", employee.value.token);
-                    return Redirect("Project/Employer"); // Redirect on successful login
+                    return Redirect("/"); // Redirect on successful login
                 }
             }
 

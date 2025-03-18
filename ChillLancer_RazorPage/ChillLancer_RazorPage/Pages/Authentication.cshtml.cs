@@ -1,7 +1,10 @@
 using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using NuGet.Common;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ChillLancer_RazorPage.Pages
@@ -29,6 +32,18 @@ namespace ChillLancer_RazorPage.Pages
         [BindProperty]
         public SignUpRequestModel SignUpRequest { get; set; } = default!;
 
+        public IActionResult OnGetSignOut()
+        {
+            // Remove token and user profile in Session
+            _httpContextAccessor.HttpContext?.Session.Remove("token");
+            _httpContextAccessor.HttpContext?.Session.Remove("UserProfile");
+
+            // If remove all Session: HttpContext.Session.Clear();
+
+            // Return Page
+            return RedirectToPage("/Authentication");
+        }
+
         // Handle Login Form
         public async Task<IActionResult> OnPostLogin()
         {
@@ -44,8 +59,32 @@ namespace ChillLancer_RazorPage.Pages
                 var employee = await employeeResponse.Content.ReadFromJsonAsync<ResponseModel>();
                 if (employee is not null)
                 {
+                    var token = employee.value.token;
                     _httpContextAccessor.HttpContext?.Session.SetString("token", employee.value.token);
-                    return Redirect("/"); // Redirect on successful login
+
+                    // config header Authorization with token
+                    _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                    // Fetch data profile API
+                    var profileResponse = await _httpClient.GetAsync("https://localhost:7225/api/account/profile");
+                    if (profileResponse.IsSuccessStatusCode)
+                    {
+                        var profileJson = await profileResponse.Content.ReadAsStringAsync();
+                        // Save profile to Session
+                        _httpContextAccessor.HttpContext?.Session.SetString("UserProfile", profileJson);
+
+                        using (JsonDocument doc = JsonDocument.Parse(profileJson))
+                        {
+                            var role = doc.RootElement.GetProperty("value").GetProperty("data").GetProperty("role").GetString();
+
+                            if (role == "Customer")
+                            {
+                                return Redirect("/"); // Homepage
+                            }
+                            return RedirectToPage("/admin/dashboard"); //Admin page
+                        }
+                    }
                 }
             }
 

@@ -1,5 +1,15 @@
-﻿@{
+﻿@using Newtonsoft.Json.Linq
+@{
     var currentPage = ViewContext.ActionDescriptor.RouteValues["page"];
+
+    // Get profile from Session
+    var profileJson = Context.Session.GetString("UserProfile");
+    JObject profileResponse = null;
+    if (!string.IsNullOrEmpty(profileJson))
+    {
+        profileResponse = JObject.Parse(profileJson);
+    }
+    var userData = profileResponse?["value"]?["data"];
 }
 
 <!DOCTYPE html>
@@ -60,29 +70,108 @@
                         </ul>
                     </li>
 
-                    @* <li class="dropdown">
+                    <li class="dropdown">
                         <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="testimonials.html">Testimonials</a></li>
-                            <li class="dropdown">
-                                <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Dropdown 1</a></li>
-                                    <li><a href="#">Deep Dropdown 2</a></li>
-                                    <li><a href="#">Deep Dropdown 3</a></li>
-                                    <li><a href="#">Deep Dropdown 4</a></li>
-                                    <li><a href="#">Deep Dropdown 5</a></li>
-                                </ul>
-                            </li>
+                            @if (userData != null)
+                            {
+                                <li><a href="/project/create">Create a project</a></li>
+                                <li><a href="/project">Join a project</a></li>
+                                <li><a href="/proposal/create">Create a proposal</a></li>
+                                <li><a href="/proposal">Hire a freelancer</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-page="/Authentication">Create a project</a></li>
+                                <li><a asp-page="/Authentication">Join a project</a></li>
+                                <li><a asp-page="/Authentication">Create a proposal</a></li>
+                                <li><a asp-page="/Authentication">Hire a freelancer</a></li>
+                            }
+                            @* <li class="dropdown">
+                            <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                            <li><a href="#">Deep Dropdown 1</a></li>
+                            <li><a href="#">Deep Dropdown 2</a></li>
+                            <li><a href="#">Deep Dropdown 3</a></li>
+                            <li><a href="#">Deep Dropdown 4</a></li>
+                            <li><a href="#">Deep Dropdown 5</a></li>
+                            </ul>
+                            </li> *@
                         </ul>
-                    </li> *@
+                    </li>
                     <li><a asp-page="/Pricing" class="@(currentPage == "/Pricing" ? "active" : "")">Pricing</a></li>
-                    <li><a asp-page="/Project/Index" class="@(currentPage == "/Project" ? "active" : "")">Projects</a></li>
+
+                    @* ============================[ Avatar / Get Start Button ]============================ *@
+                    @if (userData != null)
+                    {
+                        <li class="dropdown">
+                            <a href="#">
+                                <img src="@userData["avatar-url"]" alt="image" class="rounded-circle">
+                                <span style="margin-left:7px">@userData["name-tag"]</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a><!-- End Profile Image Icon -->
+
+                            <ul>
+                                @if (!userData["role"].ToString().ToLower().Equals("customer"))
+                                {
+                                    <li>
+                                        <a href="/Admin/Dashboard">
+                                            <i class="bi bi-graph-up" style="margin-right:10px"></i><span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="logout-button" asp-page="/Authentication" asp-page-handler="SignOut" style="justify-content:flex-start">
+                                            <i class="bi bi-box-arrow-right" style="margin-right:10px"></i><span>Sign Out</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="/accounts/detail" style="justify-content:flex-start">
+                                            <i class="bi bi-person" style="margin-right:10px"></i><span>Edit Account</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/proposal/detail" style="justify-content:flex-start">
+                                            <i class="bi bi-file-earmark-person" style="margin-right:10px"></i><span>My Proposals</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/project/employer" style="justify-content:flex-start">
+                                            <i class="bi bi-briefcase-fill" style="margin-right:10px"></i><span>My Projects</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/transaction" style="justify-content:flex-start">
+                                            <i class="bi bi-cash" style="margin-right:10px"></i><span>Transactions</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="logout-button" asp-page="/Authentication" asp-page-handler="SignOut" style="justify-content:flex-start">
+                                            <i class="bi bi-box-arrow-right" style="margin-right:10px"></i><span>Sign Out</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul><!-- End Profile Dropdown Items -->
+                        </li>
+                        <!-- End Profile Tab -->
+                    }
+                    else
+                    {
+                        <li>
+                            <a class="btn-getstarted" style="padding: 10px 15px; color:var(--contrast-color);"
+                            asp-page="/Authentication">Get Started</a>
+                        </li>
+                    }
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-
-            <a class="btn-getstarted" href="/Authentication">Login</a>
         </div>
 
 

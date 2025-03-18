@@ -22,11 +22,11 @@ namespace ChillLancer_RazorPage.Pages.Project
             //hard code, will fix later
             foreach (ProjectModel project in Projects)
             {
-                if (project.Id == Guid.Parse("f09a1648-c7ea-4465-9a90-dd87086daa53"))
-                {
-                    Project = project;
-                    break;
-                }
+                //if (project.Id == Guid.Parse("f09a1648-c7ea-4465-9a90-dd87086daa53"))
+                //{
+                //    Project = project;
+                //    break;
+                //}
             }
             //Project = result.IsSuccessStatusCode
             //        ? await result.Content.ReadFromJsonAsync<ProjectModel>() ?? new() : new();

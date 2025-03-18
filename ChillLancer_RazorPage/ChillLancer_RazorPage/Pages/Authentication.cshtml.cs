@@ -45,7 +45,7 @@ namespace ChillLancer_RazorPage.Pages
                 if (employee is not null)
                 {
                     _httpContextAccessor.HttpContext?.Session.SetString("token", employee.value.token);
-                    return Redirect("/project"); // Redirect on successful login
+                    return Redirect("/"); // Redirect on successful login
                 }
             }
 
@@ -101,6 +101,18 @@ namespace ChillLancer_RazorPage.Pages
     public class ResponseModel
     {
         public Value value { get; set; }
+    }
+    public class ResponseModelOne
+    {
+        public ValueOne value { get; set; }
+    }
+    public class ValueOne
+    {
+        public string token { get; set; }
+        public string message { get; set; }
+        public object data { get; set; }
+        [JsonPropertyName("status-code")]
+        public int code { get; set; }
     }
 
     public class Value

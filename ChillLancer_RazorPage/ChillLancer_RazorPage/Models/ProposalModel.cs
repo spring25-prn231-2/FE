@@ -14,12 +14,15 @@ namespace ChillLancer_RazorPage.Models
         public string FreelancerName { get; set; } = null!;
         [Required, MaxLength(255)]
         public string Title { get; set; } = null!;
+        [Required, MaxLength(1000)]
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public int HourDuration { get; set; }
         public int DeliveryTime { get; set; } = 1;
         [JsonPropertyName("created-at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [JsonPropertyName("applied-date")]
+        public DateTime AppliedDate { get; set; } = DateTime.UtcNow;
         [MaxLength(30)]
         public string Status { get; set; } = "Created";
         [JsonPropertyName("project-id")]

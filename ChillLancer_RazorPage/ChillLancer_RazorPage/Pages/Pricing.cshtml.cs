@@ -12,8 +12,7 @@ namespace ChillLancer_RazorPage.Pages
         public List<PackageModel> Packages { get; set; } = [];
         public async Task<IActionResult> OnGetAsync()
         {
-            var serverUrl = _configuration["ServerUrl"];
-            var apiUrl = $"{serverUrl}/api/package";
+            var apiUrl = $"{_configuration["ServerUrl"]}/api/package";
             try
             {
                 var response = await _httpClient.GetFromJsonAsync<List<PackageModel>>(apiUrl);

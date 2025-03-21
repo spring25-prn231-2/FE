@@ -16,7 +16,7 @@
             <div class="grid-container">
                 @foreach (var proj in Model.ProjectList)
                 {
-                    <a class="card-container" href="/project/detail">
+                    <a class="card-container" href="/project/details/@proj.Id">
                         <h5>@proj.Title</h5>
                         <div class="item-wrap-center-left">
                             <i class="bi bi-caret-right-fill"></i>

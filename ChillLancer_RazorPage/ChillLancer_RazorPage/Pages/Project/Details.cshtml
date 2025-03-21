@@ -3,10 +3,84 @@
 @{
     ViewData["Title"] = "Project Details";
 }
-<div class="project-header">
-    <h2>@Model.Project.Title</h2>
-    <ul class="nav-tabs">
-        <li><a asp-page="Details">Details</a></li>
-        <li class="active"><a asp-page="Proposals">Proposals</a></li>
-    </ul>
+<link rel="stylesheet" href="/css/proposals.css" />
+
+<div class="section container bg-primary">
+    <div class="project-header">
+        <h2>@Model.Project.Title</h2>
+        <ul class="nav-tabs">
+            <li><a asp-page="Details">Details</a></li>
+            <li class="active"><a asp-page="Proposals">Proposals</a></li>
+        </ul>
+    </div>
+    <div class ="project-details-container">
+        <div class="project-details">
+            <h4>Project details</h4>
+            @* <ul class="nav-tabs"> *@
+            @*     <li>$@Model.Project.Budget</li> *@
+            @*     <li>Bidding end in @Model.Project.Duration days</li> *@
+            @* </ul> *@
+        <p>@Model.Project.Description</p>
+        </div>
+        <div class="about-the-client">
+            <h4>About the client</h4>
+        </div>
+        <div class="project-details">
+            <h4>Place a bid on this project</h4>
+            <form method="post" class="form-container">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label asp-for="Proposal.Title" class="control-label"></label>
+                    <input asp-for="Proposal.Title" class="form-control" />
+                    <span asp-validation-for="Proposal.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label asp-for="Proposal.Description" class="control-label"></label>
+                    <textarea asp-for="Proposal.Description" class="form-control"></textarea>
+                    <span asp-validation-for="Proposal.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label asp-for="Proposal.Price" class="control-label"></label>
+                    <span class="input-group-text">$</span>
+                    <input type="number" asp-for="Proposal.Price" class="form-control" />
+                    <span asp-validation-for="Proposal.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label asp-for="Proposal.HourDuration" class="control-label"></label>
+                    <input type="number" asp-for="Proposal.HourDuration" class="form-control" />
+                    <span asp-validation-for="Proposal.HourDuration" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label asp-for="Proposal.DeliveryTime" class="control-label"></label>
+                    <input type="number" asp-for="Proposal.DeliveryTime" class="form-control" />
+                    <span asp-validation-for="Proposal.DeliveryTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Place bid" class="btn btn-primary" />
+                </div>
+            </form>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="text-danger">
+                    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+                </div>
+            }
+        </div>
+    </div>
 </div>
+<div class="section container">
+    
+</div>
+<style>
+    body{
+        background-color: #fcfcfd;
+    }
+    .bg-primary {
+        background-color: #fcfcfd !important; /* Custom orange */
+    }
+</style>

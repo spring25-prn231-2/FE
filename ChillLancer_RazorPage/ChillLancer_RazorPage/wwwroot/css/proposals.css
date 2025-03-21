@@ -3,12 +3,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px;
-    background: #f8f9fa;
-    border-bottom: 2px solid #ddd;
+/*    background: #f8f9fa;*/
+/*    border-bottom: 2px solid #ddd;*/
 }
 
 .nav-tabs {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin: 0;
     display: flex;
@@ -36,7 +36,7 @@
     background: #fff;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #ddd;
+/*    border-bottom: 1px solid #ddd;*/
 }
 
 .proposal-list {
@@ -72,4 +72,24 @@
 .delivery-time {
     font-size: 14px;
     color: #6c757d;
+}
+.project-details-container {
+    align-items: flex-start;
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1200px;
+}
+.project-details {
+    flex-basis: 75%;
+    width: 75%;
+    padding: 2rem;
+/*    border: 1px solid;*/
+    box-shadow: 0 1px 2px #12151b40;
+    border-radius: 5px;
+    background: #fff;
+}
+.about-the-client {
+    flex-basis: 25%;
+    width: 25%;
+    padding: 0 12px;
 }

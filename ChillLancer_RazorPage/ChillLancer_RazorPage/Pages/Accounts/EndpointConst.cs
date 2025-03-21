@@ -6,5 +6,7 @@ namespace ChillLancer_RazorPage.Pages.Accounts
     {
         public const string baseUrl = "https://localhost:7225/api/";
         public const string account = "account/";
+        public const string proposal = "proposal/";
+        public const string project = "project/";
     }
 }

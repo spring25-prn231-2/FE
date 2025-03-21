@@ -1,0 +1,68 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Project.EmployerModel
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>Projects</h1>
+@if (Model.EmployerId != "null")
+{
+    <div style="font-size: 32px; font-weight: bold; text-align: right;">
+        Welcome, @Model.EmployerName
+    </div>
+
+}
+<p>
+    <button asp-page="Create" style="height:30px; width:100px; background-color:#DE444C; border:none; border-radius:3px; color:white"
+            onclick="location.href='@Url.Page("/Project/Create")'">
+        Create New
+    </button>
+</p>
+
+@if (Model.Projects.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Guide lines</th>
+                <th>Budget</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Requirement Note</th>
+                <th>Status</th>
+                <th>Category</th>
+                <th>Skill</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+                <tr>
+                    <td>@project.Title</td>
+                    <td>@project.Description</td>
+                    <td>@project.Guidelines</td>
+                    <td>@project.Budget</td>
+                    <td>@project.StartDate</td>
+                    <td>@project.EndDate</td>
+                    <td>@project.RequirementNote</td>
+                    <td>@project.Status</td>
+                    <td>@project.CategoryName</td>
+                    <td>
+                        @(project.SkillName != null && project.SkillName.Any() ? string.Join(", ", project.SkillName) : "N/A")
+                    </td>
+                    <td>
+                        <a asp-page="Details" asp-route-id="@project.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-page="Edit" asp-route-id="@project.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-page="Delete" asp-route-id="@project.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No projects found.</p>
+}

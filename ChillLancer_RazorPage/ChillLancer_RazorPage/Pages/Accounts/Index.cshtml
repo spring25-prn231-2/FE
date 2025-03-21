@@ -2,185 +2,197 @@
 @model ChillLancer_RazorPage.Pages.Accounts.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Accounts";
 }
+<div style="margin: 12px">
+    <h1>Accounts</h1>
 
-<h1>Index</h1>
+    <p>
+        <button asp-page="Create" style="height:30px; width:100px; background-color:#DE444C; border:none; border-radius:3px; color:white"
+        onclick="location.href='@Url.Page("/Accounts/Create")'">
+            Create New
+        </button>
+    </p>
+    <div style="overflow-x: auto; overflow-y:auto; max-height:400px">
+        <table class="table" border="1" style="width: 100%; border-collapse: collapse; text-align: center;">
+            <thead>
+                <tr style="white-space: nowrap; text-align: center; vertical-align: middle;">
+                    <th>
+                        Avatar
+                    </th>
+                    @* <th> *@
+                    @*     @Html.DisplayNameFor(model => model.Accounts[0].FirebaseUid) *@
+                    @* </th> *@
+                    @* <th> *@
+                    @*     @Html.DisplayNameFor(model => model.Accounts[0].FcmToken) *@
+                    @* </th> *@
+                    @* <th> *@
+                    @*     @Html.DisplayNameFor(model => model.Accounts[0].GoogleId) *@
+                    @* </th> *@
+                    @* <th> *@
+                    @*     @Html.DisplayNameFor(model => model.Accounts[0].FacebookId) *@
+                    @* </th> *@
+                    @* <th> *@
+                    @*     @Html.DisplayNameFor(model => model.Accounts[0].NameTag) *@
+                    @* </th> *@
+                    @* <th> *@
+                    @*     @Html.DisplayNameFor(model => model.Accounts[0].IdentityCode) *@
+                    @* </th> *@
+                    <th>
+                        Full name
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Email)
+                    </th>
+                    <th>
+                        Phone number
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Address)
+                    </th>
+                    <th>
+                        Birthday
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].National)
+                    </th>
+                    <th>
+                        Bio summary
+                    </th>
+                    <th>
+                        Company name
+                    </th>
+                    <th>
+                        Company website
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Favorited)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Liked)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Dislike)
+                    </th>
+                    <th>
+                        Is verified
+                    </th>
+                    <th>
+                        Last delivery
+                    </th>
+                    <th>
+                        Joined date
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Role)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accounts[0].Status)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Accounts)
+                {
+                    <tr style="text-align: left">
+                        <td>
+                            <img src="@item.AvatarUrl" alt="Avatar" style="width:100px; height:100px;" />
+                        </td>
+                        @* <td> *@
+                        @*     @Html.DisplayFor(modelItem => item.FirebaseUid) *@
+                        @* </td> *@
+                        @* <td> *@
+                        @*     @Html.DisplayFor(modelItem => item.FcmToken) *@
+                        @* </td> *@
+                        @* <td> *@
+                        @*     @Html.DisplayFor(modelItem => item.GoogleId) *@
+                        @* </td> *@
+                        @* <td> *@
+                        @*     @Html.DisplayFor(modelItem => item.FacebookId) *@
+                        @* </td> *@
+                        @* <td> *@
+                        @*     @Html.DisplayFor(modelItem => item.NameTag) *@
+                        @* </td> *@
+                        @* <td> *@
+                        @*     @Html.DisplayFor(modelItem => item.IdentityCode) *@
+                        @* </td> *@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @(item.DateOfBirth.HasValue ? DateOnly.FromDateTime(item.DateOfBirth.Value) : "00/00/0000")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.National)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BioSummary)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyWebsite)
+                        </td>
+                        <td style="text-align: center">
+                            @Html.DisplayFor(modelItem => item.Favorited)
+                        </td>
+                        <td style="text-align: center">
+                            @Html.DisplayFor(modelItem => item.Liked)
+                        </td>
+                        <td style="text-align: center">
+                            @Html.DisplayFor(modelItem => item.Dislike)
+                        </td>
+                        <td style="text-align: center">
+                            @Html.DisplayFor(modelItem => item.IsVerified)
+                        </td>
+                        <td>
+                            @(item.LastDelivery.HasValue ? DateOnly.FromDateTime(item.LastDelivery.Value) : "00/00/0000"))
+                        </td>
+                        <td>
+                            @(item.JoinedDate.HasValue ? DateOnly.FromDateTime(item.JoinedDate.Value) : "00/00/0000")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <p>
+                                <button style="height:30px; width:100px; background-color:#DE444C; border:none; border-radius:3px; color:white"
+                                        onclick="location.href='@Url.Page("/Accounts/Edit",new{id = item.Id})'">
+                                    Edit
+                                </button>
+                            </p>
+                            <p>
+                                <button style="height:30px; width:100px; background-color:#DE444C; border:none; border-radius:3px; color:white"
+                                        onclick="location.href='@Url.Page("/Accounts/Delete",new{id = item.Id})'">
+                                    Delete
+                                </button>
+                            </p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].AvatarUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].FirebaseUid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].FcmToken)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].GoogleId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].FacebookId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].NameTag)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].IdentityCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].DateOfBirth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].National)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].BioSummary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].CompanyWebsite)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Favorited)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Liked)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Dislike)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].IsVerified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].LastDelivery)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].JoinedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Role)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Accounts[0].Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Accounts) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvatarUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirebaseUid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FcmToken)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoogleId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FacebookId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameTag)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.National)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BioSummary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyWebsite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Favorited)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Liked)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dislike)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsVerified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastDelivery)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JoinedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+

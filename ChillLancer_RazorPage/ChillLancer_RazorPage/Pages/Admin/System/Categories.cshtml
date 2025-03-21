@@ -1,0 +1,152 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Admin.System.CategoriesModel
+@{
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Categories Configuration</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="/Dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item">System Configuration</li>
+                <li class="breadcrumb-item active">Categories</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-sm">
+                                <h5 class="card-title">Categories</h5>
+                            </div>
+                            <div class="col-sm text-end ">
+                                <button id="btnAddNew" type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                                    <i class="bi bi-plus-circle me-1"></i>Add New
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Major Name</th>
+                                    <th>Brief Name</th>
+                                    <th>Specialized Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var category in Model.CategoriesList)
+                                {
+                                    <tr>
+                                        <td>@category.MajorName</td>
+                                        <td>@category.BriefName</td>
+                                        <td>@category.SpecializedName</td>
+                                        <td>@category.Status</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal"
+                                        data-id="@category.Id" data-major="@category.MajorName" data-brief="@category.BriefName" data-specialized="@category.SpecializedName" data-status="@category.Status">
+                                        Edit
+                                        </button>
+                                            <form method="post" asp-page-handler="Delete" style="display:inline">
+                                                <input type="hidden" name="id" value="@category.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                        <div class="modal fade" id="categoryModal" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="Save">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Category Form</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" id="isEdit" asp-for="IsEdit" />
+                                            <input type="hidden" id="categoryId" asp-for="CategoryObj.Id" value="" />
+                                            <div class="mb-3">
+                                                <label asp-for="CategoryObj.MajorName" class="form-label">Major Name</label>
+                                                <input type="text" class="form-control" id="majorName" asp-for="CategoryObj.MajorName" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="CategoryObj.BriefName" class="form-label">Brief Name</label>
+                                                <input type="text" class="form-control" id="briefName" asp-for="CategoryObj.BriefName" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="CategoryObj.SpecializedName" class="form-label">Specialized Name</label>
+                                                <input type="text" class="form-control" id="specializedName" asp-for="CategoryObj.SpecializedName" required />
+                                            </div>
+                                            <div class="mb-3" id="statusGroup">
+                                                <label asp-for="CategoryObj.Status" class="form-label">Status</label>
+                                                <select class="form-select" id="status" asp-for="CategoryObj.Status">
+                                                    <option value="Update">Updated</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- End Modal Form Modal-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<script>
+    var categoryModal = document.getElementById('categoryModal');
+    categoryModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // Nút đã kích hoạt modal
+        var modalTitle = categoryModal.querySelector('.modal-title');
+        if (button.id === 'btnAddNew') {
+            modalTitle.textContent = 'Add New Category';
+            categoryModal.querySelector('#categoryId').value = '';
+            categoryModal.querySelector('#majorName').value = '';
+            categoryModal.querySelector('#briefName').value = '';
+            categoryModal.querySelector('#specializedName').value = '';
+
+            categoryModal.querySelector('#statusGroup').classList.add('d-none');
+            categoryModal.querySelector('#status').value = '';
+        } else {
+            var id = button.getAttribute('data-id');
+            var major = button.getAttribute('data-major');
+            var brief = button.getAttribute('data-brief');
+            var specialized = button.getAttribute('data-specialized');
+
+            modalTitle.textContent = 'Edit Category';
+            categoryModal.querySelector('#isEdit').value = 'true';
+            categoryModal.querySelector('#categoryId').value = id;
+            categoryModal.querySelector('#majorName').value = major;
+            categoryModal.querySelector('#briefName').value = brief;
+            categoryModal.querySelector('#specializedName').value = specialized;
+
+            categoryModal.querySelector('#statusGroup').classList.remove('d-none');
+            categoryModal.querySelector('#status').value = 'Update';
+        }
+    });
+</script>

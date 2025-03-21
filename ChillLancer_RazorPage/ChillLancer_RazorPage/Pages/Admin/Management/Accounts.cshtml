@@ -1,0 +1,230 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Admin.Management.AccountsModel
+@{
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Accounts Configuration</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="/Dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item">System Configuration</li>
+                <li class="breadcrumb-item active">Accounts</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-sm">
+                                <h5 class="card-title">Accounts</h5>
+                            </div>
+                            <div class="col-sm text-end ">
+                                <button id="btnAddNew" type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#accountModal">
+                                    <i class="bi bi-plus-circle me-1"></i>Add New
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Tag</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>IsVerified</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var account in Model.AccountsList)
+                                {
+                                    <tr>
+                                        <td>@account.NameTag</td>
+                                        <td>@account.FullName</td>
+                                        <td>@account.Email</td>
+                                        <td>
+                                            @if (account.IsVerified)
+                                            {
+                                                <i class="bi bi-check-circle-fill text-success"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="bi bi-x-circle-fill text-danger"></i>
+                                            }
+                                        </td>
+                                        <td>@account.Role</td>
+                                        <td>@account.Status</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#accountModal"
+                                                    data-id="@account.Id" data-nametag="@account.NameTag" data-fullname="@account.FullName" data-email="@account.Email"
+                                                    data-password="@account.Password" data-identity="@account.IdentityCode" data-phone="@account.PhoneNumber"
+                                                    data-address="@account.Address" data-national="@account.National" data-company="@account.CompanyName"
+                                                    data-isverified="@account.IsVerified" data-role="@account.Role" data-status="@account.Status">
+                                                Edit
+                                            </button>
+                                            <form method="post" asp-page-handler="Delete" style="display:inline">
+                                                <input type="hidden" name="id" value="@account.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                        <div class="modal fade" id="accountModal" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="Save">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Account Form</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" id="isEdit" asp-for="IsEdit" />
+                                            <input type="hidden" id="accountId" asp-for="AccountObj.Id" value="" />
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.NameTag" class="form-label">Name Tag</label>
+                                                <input type="text" class="form-control" id="accountNameTag" asp-for="AccountObj.NameTag" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.FullName" class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" id="accountFullName" asp-for="AccountObj.FullName" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.Email" class="form-label">Email</label>
+                                                <input type="text" class="form-control" id="accountEmail" asp-for="AccountObj.Email" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.Password" class="form-label">Password</label>
+                                                <input type="text" class="form-control" id="accountPassword" asp-for="AccountObj.Password" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.IdentityCode" class="form-label">IdentityCode</label>
+                                                <input type="text" class="form-control" id="accountIdentityCode" asp-for="AccountObj.IdentityCode" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.PhoneNumber" class="form-label">PhoneNumber</label>
+                                                <input type="text" class="form-control" id="accountPhoneNumber" asp-for="AccountObj.PhoneNumber" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.Address" class="form-label">Address</label>
+                                                <input type="text" class="form-control" id="accountAddress" asp-for="AccountObj.Address" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.National" class="form-label">National</label>
+                                                <input type="text" class="form-control" id="accountNational" asp-for="AccountObj.National" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.CompanyName" class="form-label">CompanyName</label>
+                                                <input type="text" class="form-control" id="accountCompanyName" asp-for="AccountObj.CompanyName" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.IsVerified" class="form-label">Is Verified</label>
+                                                <select class="form-select" id="accountIsVerified" asp-for="AccountObj.IsVerified">
+                                                    <option value="true">Verified</option>
+                                                    <option value="false">Not Verified</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="AccountObj.Role" class="form-label">Role</label>
+                                                <select class="form-select" id="accountRole" asp-for="AccountObj.Role">
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Staff">Staff</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3" id="statusGroup">
+                                                <label asp-for="AccountObj.Status" class="form-label">Status</label>
+                                                <select class="form-select" id="accountStatus" asp-for="AccountObj.Status">
+                                                    <option value="Update">Updated</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- End Modal Form Modal-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<script>
+    var accountModal = document.getElementById('accountModal');
+    accountModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // Nút đã kích hoạt modal
+        var modalTitle = accountModal.querySelector('.modal-title');
+        if (button.id === 'btnAddNew') {
+            modalTitle.textContent = 'Add New Account';
+            accountModal.querySelector('#accountId').value = '';
+            accountModal.querySelector('#accountNameTag').value = '';
+            accountModal.querySelector('#accountFullName').value = '';
+            accountModal.querySelector('#accountEmail').value = '';
+            accountModal.querySelector('#accountPassword').value = '';
+            accountModal.querySelector('#accountIdentityCode').value = '';
+            accountModal.querySelector('#accountPhoneNumber').value = '';
+            accountModal.querySelector('#accountAddress').value = '';
+            accountModal.querySelector('#accountNational').value = '';
+            accountModal.querySelector('#accountCompanyName').value = '';
+            accountModal.querySelector('#accountIsVerified').value = 'false';
+            accountModal.querySelector('#accountRole').value = 'Customer';
+
+            accountModal.querySelector('#statusGroup').classList.add('d-none');
+            accountModal.querySelector('#accountStatus').value = '';
+        } else {
+            var idData = button.getAttribute('data-id');
+            var nametagData = button.getAttribute('data-nametag');
+            var fullnameData = button.getAttribute('data-fullname');
+            var emailData = button.getAttribute('data-email');
+            var passwordData = button.getAttribute('data-password');
+            var identityData = button.getAttribute('data-identity');
+            var phonenumberData = button.getAttribute('data-phone');
+            var addressData = button.getAttribute('data-address');
+            var nationalData = button.getAttribute('data-national');
+            var companyData = button.getAttribute('data-company');
+            var isverifiedData = button.getAttribute('data-isverified');
+            var roleData = button.getAttribute('data-role');
+
+            modalTitle.textContent = 'Edit Account';
+            accountModal.querySelector('#isEdit').value = 'true';
+            accountModal.querySelector('#accountId').value = idData;
+            accountModal.querySelector('#accountNameTag').value = nametagData;
+            accountModal.querySelector('#accountFullName').value = fullnameData;
+            accountModal.querySelector('#accountEmail').value = emailData;
+            accountModal.querySelector('#accountPassword').value = passwordData;
+            accountModal.querySelector('#accountIdentityCode').value = identityData;
+            accountModal.querySelector('#accountPhoneNumber').value = phonenumberData;
+            accountModal.querySelector('#accountAddress').value = addressData;
+            accountModal.querySelector('#accountNational').value = nationalData;
+            accountModal.querySelector('#accountCompanyName').value = companyData;
+            accountModal.querySelector('#accountIsVerified').value = isverifiedData;
+            accountModal.querySelector('#accountRole').value = roleData;
+
+            accountModal.querySelector('#statusGroup').classList.remove('d-none');
+            accountModal.querySelector('#accountStatus').value = 'Update';
+        }
+    });
+</script>

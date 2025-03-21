@@ -1,0 +1,145 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Admin.System.SkillsModel
+@{
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Skills Configuration</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-page="/Dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item">System Configuration</li>
+                <li class="breadcrumb-item active">Skills</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-sm">
+                                <h5 class="card-title">Skills</h5>
+                            </div>
+                            <div class="col-sm text-end ">
+                                <button id="btnAddNew" type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#skillModal">
+                                    <i class="bi bi-plus-circle me-1"></i>Add New
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th class="d-none"></th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var skill in Model.SkillsList)
+                                {
+                                    <tr>
+                                        <td class="d-none"></td>
+                                        <td>@skill.Name</td>
+                                        <td>@skill.Description</td>
+                                        <td>@skill.Status</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#skillModal"
+                                                    data-id="@skill.Id" data-name="@skill.Name" data-description="@skill.Description" data-status="@skill.Status">
+                                                Edit
+                                            </button>
+                                            <form method="post" asp-page-handler="Delete" style="display:inline">
+                                                <input type="hidden" name="id" value="@skill.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                        <div class="modal fade" id="skillModal" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="Save">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Skill Form</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" id="isEdit" asp-for="IsEdit" />
+                                            <input type="hidden" id="skillId" asp-for="SkillObj.Id" value="" />
+                                            <div class="mb-3">
+                                                <label asp-for="SkillObj.Name" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="skillName" asp-for="SkillObj.Name" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label asp-for="SkillObj.Description" class="form-label">Description</label>
+                                                <input type="text" class="form-control" id="skillDescription" asp-for="SkillObj.Description" />
+                                            </div>
+                                            <div class="mb-3" id="statusGroup">
+                                                <label asp-for="SkillObj.Status" class="form-label">Status</label>
+                                                <select class="form-select" id="skillStatus" asp-for="SkillObj.Status">
+                                                    <option value="Update">Updated</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- End Modal Form Modal-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<script>
+    var skillModal = document.getElementById('skillModal');
+    skillModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget; // Nút đã kích hoạt modal
+        var modalTitle = skillModal.querySelector('.modal-title');
+        if (button.id === 'btnAddNew') {
+            modalTitle.textContent = 'Add New Skill';
+            skillModal.querySelector('#skillId').value = '';
+            skillModal.querySelector('#skillName').value = '';
+            skillModal.querySelector('#skillDescription').value = '';
+
+            skillModal.querySelector('#statusGroup').classList.add('d-none');
+            skillModal.querySelector('#skillStatus').value = '';
+        } else {
+            var idData = button.getAttribute('data-id');
+            var nameData = button.getAttribute('data-name');
+            var descriptionData = button.getAttribute('data-description');
+
+            modalTitle.textContent = 'Edit Skill';
+            skillModal.querySelector('#isEdit').value = 'true';
+            skillModal.querySelector('#skillId').value = idData;
+            skillModal.querySelector('#skillName').value = nameData;
+            skillModal.querySelector('#skillDescription').value = descriptionData;
+
+            skillModal.querySelector('#statusGroup').classList.remove('d-none');
+            skillModal.querySelector('#skillStatus').value = 'Update';
+        }
+    });
+</script>

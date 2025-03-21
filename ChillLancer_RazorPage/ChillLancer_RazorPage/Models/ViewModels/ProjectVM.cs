@@ -1,8 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ChillLancer_RazorPage.Model
+namespace ChillLancer_RazorPage.Models.ViewModels
 {
-    public class ProjectModel
+    public class ProjectVM
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; } = null!;
@@ -10,10 +10,10 @@ namespace ChillLancer_RazorPage.Model
         public string? Guidelines { get; set; }
         public decimal Budget { get; set; } = 0;
         public int Duration { get; set; } = 1;//How many days to work from start date
-        [JsonPropertyName("start-date")]
         public DateTime? StartDate { get; set; }
-        [JsonPropertyName("end-date")]
         public DateTime? EndDate { get; set; }
         public string? RequirementNote { get; set; }
+        [MaxLength(30)]
+        public string Status { get; set; } = "Created";
     }
 }

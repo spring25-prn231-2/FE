@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChillLancer_RazorPage.Model.AccountDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ChillLancer_RazorPage.Model;
+using ChillLancer_RazorPage.Models;
 
 namespace ChillLancer_RazorPage.Pages.Accounts
 {

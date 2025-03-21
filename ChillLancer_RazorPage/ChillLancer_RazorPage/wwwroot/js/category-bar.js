@@ -21,7 +21,8 @@
     } else {
         const savedData = localStorage.getItem(storageKeyCategory);
         if (savedData) {
-            renderCategories(JSON.parse(savedData));
+            renderNavCategories(JSON.parse(savedData));
+            renderNavCategoriesMobile(JSON.parse(savedData));
         } else {
             console.log("No cached category data found.");
             fetchAndStoreCategories(); // Fetch nếu dữ liệu bị mất
@@ -37,13 +38,14 @@
                 // Save to localStorage
                 localStorage.setItem(storageKeyCategory, JSON.stringify(data));
                 localStorage.setItem(storageKeyTimestamp, new Date().toISOString());
-                renderCategories(data);
+                renderNavCategories(data);
+                renderNavCategoriesMobile(data);
             })
             .catch(error => console.error('Error fetching categories:', error));
     }
 
-    function renderCategories(categories) {
-        const container = document.querySelector('.categories-list');
+    function renderNavCategories(categories) {
+        const container = document.querySelector('.categories-nav');
         if (!container) return;
 
         // Group categories by MajorName and BriefName
@@ -64,15 +66,17 @@
         for (const [majorName, briefGroups] of Object.entries(grouped)) {
             html += `
                     <li class="category-item">
-                        <a href="#" class="major-link" data-major="${majorName}">${majorName}</a>
+                        <a href="/Categories?majorName=${encodeURIComponent(majorName)}" class="major-link">${majorName}</a>
                         <ul class="sub-categories-list four-columns-menu">`;
 
             for (const [briefName, specializedNames] of Object.entries(briefGroups)) {
                 html += `
                         <li class="sub-categories-item category-brief-name">${briefName}
-                            <ul class="group-sub-categories>
-                                ${specializedNames.map(name =>
-                    `<li class="sub-categories-item"><a href="#" class="specialized-link" data-major="${specializedNames}">${name}</a></li>`
+                            <ul class="group-sub-categories">
+                            ${specializedNames.map(specName =>
+                                `<li class="sub-categories-item">
+                                    <a href="/project?categoryName=${encodeURIComponent(specName)}" class="specialized-link">${specName}</a>
+                                </li>`
                 ).join('')}
                             </ul>
                         </li>`;
@@ -81,29 +85,32 @@
         }
 
         container.innerHTML = html;
+    }
 
-        // Add event listeners those link
-        document.querySelectorAll('.major-link').forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const majorName = this.dataset.major;
-                window.location.href = serverUrl + `/Category?major=${encodeURIComponent(majorName)}`;
-            });
+    function renderNavCategoriesMobile(categories) {
+        const container = document.querySelector('.categories-mobile-nav');
+        if (!container) return;
+
+        // Tạo Set để lấy các MajorName duy nhất
+        const majorNames = [...new Set(categories.map(category => category['major-name']))];
+
+        // Tạo HTML structure
+        let html = '';
+        majorNames.forEach(majorName => {
+            html += `
+            <li>
+                <a href="/Categories?majorName=${encodeURIComponent(majorName)}">${majorName}</a>
+            </li>`;
         });
-        document.querySelectorAll('.specialized-link').forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const majorName = this.dataset.major;
-                window.location.href = serverUrl + `/Category?major=${encodeURIComponent(majorName)}`;
-            });
-        });
+
+        container.innerHTML = html;
     }
 });
 
-//==============================================================================
+//=================================[ Category Slide Tray ]=================================
 document.addEventListener('DOMContentLoaded', function () {
     const wrapper = document.querySelector('.categories-navbar');
-    const listItems = document.querySelector('.categories-list');
+    const listItems = document.querySelector('.categories-nav');
     const leftScrollBtn = document.querySelector('.left-arrow');
     const rightScrollBtn = document.querySelector('.right-arrow');
     const itemWidth = 300;

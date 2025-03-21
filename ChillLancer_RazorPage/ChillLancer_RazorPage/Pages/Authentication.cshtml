@@ -18,37 +18,75 @@
         <div class="global-style main-container" id="container">
             @* Register Form*@
             <div class="global-style form-container sign-up">
-                <form class="global-style">
+                <form class="global-style" method="post" asp-page-handler="SignUp">
+                    <input type="hidden" name="formType" value="signup" />
+                    <input type="hidden" id="role" name="SignUpRequest.Role" value="" />
                     <h1 class="global-style">Create Account</h1>
-                    <div class="global-style social-icons">
-                        <a href="#" class="global-style icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="global-style icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="global-style icon"><i class="fa-brands fa-github"></i></a>
-                        <a href="#" class="global-style icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <!-- Fields for Sign Up -->
+                    <input required class="global-style" type="text" asp-for="SignUpRequest.FullName" placeholder="Full Name">
+                    <input required class="global-style" type="email" asp-for="SignUpRequest.Email" placeholder="Email">
+                    <input required class="global-style" type="password" asp-for="SignUpRequest.Password" placeholder="Password">
+
+                    <div class="button-container" style="margin: 20px 0; display: flex; justify-content: space-between; gap: 10px;">
+                        <button type="button"
+                                id="btnFreelancer"
+                                class="global-style btn-primary-color"
+                                style="flex: 1; transition: opacity 0.3s; min-width: 0;"
+                                onclick="setRole('Freelancer', this)">
+                            Freelancer
+                        </button>
+                        <button type="button"
+                                id="btnEmployer"
+                                class="global-style btn-secondary-color"
+                                style="flex: 1; transition: opacity 0.3s; min-width: 0;"
+                                onclick="setRole('Employer', this)">
+                            Employer
+                        </button>
                     </div>
-                    <span class="global-style">or use your email for registeration</span>
-                    <input class="global-style" type="text" placeholder="Full Name">
-                    <input class="global-style" type="email" placeholder="Email">
-                    <input class="global-style" type="password" placeholder="Password">
-                    <button class="global-style btn-primary-color">Sign Up</button>
+
+                    <button type="submit"
+                            class="global-style btn-primary-color"
+                            style="margin-top: 10px;">
+                        Sign Up
+                    </button>
                 </form>
+
+                <script>
+                    function setRole(role, btn) {
+                        // Đặt giá trị role vào input hidden
+                        document.getElementById('role').value = role;
+
+                        // Làm mờ nút được chọn
+                        btn.style.opacity = "0.5";
+                        btn.style.pointerEvents = "none";
+
+                        // Khôi phục nút còn lại về trạng thái bình thường
+                        const otherBtn = (btn.id === 'btnFreelancer')
+                            ? document.getElementById('btnEmployer')
+                            : document.getElementById('btnFreelancer');
+                        otherBtn.style.opacity = "1";
+                        otherBtn.style.pointerEvents = "auto";
+                    }
+                </script>
             </div>
 
             @* Login Form *@
             <div class="global-style form-container sign-in">
-                <form class="global-style" method="post">
+                <form class="global-style" method="post" asp-page-handler="Login">
+                    <input type="hidden" name="formType" value="login" />
                     <h1 class="global-style">Sign In</h1>
-                    <div class="global-style social-icons">
-                        <a href="#" class="global-style  icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="global-style  icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="global-style  icon"><i class="fa-brands fa-github"></i></a>
-                        <a href="#" class="global-style  icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                    <span class="global-style">or use your email password</span>
-                    <input class="global-style" type="email" asp-for="AuthRequest.Email" placeholder="Email">
-                    <input class="global-style" type="password" asp-for="AuthRequest.Password" placeholder="Password">
-                    <a class="global-style" href="#">Forget Your Password?</a>
-                    <button class="global-style btn-primary-color" type="submit">Login</button>
+                    <!-- Fields for Login -->
+                    <input required class="global-style" type="email" asp-for="AuthRequest.Email" placeholder="Email">
+                    <input required class="global-style" type="password" asp-for="AuthRequest.Password" placeholder="Password">
+                    <a class="global-style" href="#">Forgot Your Password?</a>
+                    <button class="global-style btn-primary-color">Login</button>
+                    <!-- Hiển thị lỗi model -->
+                    @if (!ModelState.IsValid)
+                    {
+                        <div class="text-danger" style="margin-top:10px;">
+                            @Html.ValidationSummary(true, "", new { @style = "list-style-type: none; padding-left: 0;" })
+                        </div>
+                    }
                 </form>
             </div>
 

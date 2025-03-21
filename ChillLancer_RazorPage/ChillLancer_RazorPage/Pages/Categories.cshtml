@@ -1,0 +1,92 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.CategoriesModel
+@{
+    Layout = "_Layout";
+    var majorName = ViewData["MajorName"] as string;
+}
+
+<main class="main">
+    <section class="section container">
+        <h2><b>Explore @majorName</b></h2>
+
+        <div class="grid-container">
+            @foreach (var group in Model.GroupedCategories)
+            {
+                <div class="card-container">
+                    <h5>@group.BriefName</h5>
+                    @foreach (var category in group.SpecializedCategories)
+                    {
+                        <a href="/project?categoryName=@category.SpecializedName" class="sub-category-item">
+                            <div class="item-wrap-center-left">
+                                <i class="bi bi-caret-right-fill"></i>
+                                <span>@category.SpecializedName</span>
+                            </div>
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+
+    @* Style For List Menu *@
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px; /* space between col & row */
+        }
+
+         @@media screen and (max-width: 1200px) {
+             .grid-container {
+                 grid-template-columns: repeat(3, 1fr);
+                 gap: 15px;
+             }
+         }
+        
+         @@media screen and (max-width: 768px) {
+             .grid-container {
+                 grid-template-columns: repeat(2, 1fr);
+                 gap: 10px;
+             }
+         }
+         
+         @@media screen and (max-width: 576px) {
+             .grid-container {
+                 grid-template-columns: 1fr;
+                 gap: 5px;
+             }
+         }
+
+        .card-container {
+            background-color: white;
+            padding: 1em;
+            padding-bottom: 1.1em;
+            border-radius: 15px;
+            margin: 1em;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+                        rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+                        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
+
+        .sub-category-item {
+            display:block;
+            flex-direction: row;
+            padding: 0.5em 1em 0.5em;
+            justify-content: left;
+            border-radius: 10px;
+            transition: .4s ease-in-out;
+        }
+
+            .sub-category-item:hover {
+                cursor: pointer;
+                background-color: rgb(240,240,240);
+            }
+
+        .item-wrap-center {
+            display:flex;
+            position: relative;
+            margin-right: 1em;
+            align-self: center;
+        }
+    </style>
+</main>

@@ -1,5 +1,15 @@
-﻿@{
+﻿@using Newtonsoft.Json.Linq
+@{
     var currentPage = ViewContext.ActionDescriptor.RouteValues["page"];
+
+    // Get profile from Session
+    var profileJson = Context.Session.GetString("UserProfile");
+    JObject profileResponse = null;
+    if (!string.IsNullOrEmpty(profileJson))
+    {
+        profileResponse = JObject.Parse(profileJson);
+    }
+    var userData = profileResponse?["value"]?["data"];
 }
 
 <!DOCTYPE html>
@@ -54,38 +64,114 @@
                     <li><a asp-page="/Index" class="@(currentPage == "/Index" ? "active" : "")">Home</a></li>
                     <li><a asp-page="/About" class="@(currentPage == "/About" ? "active" : "")">About</a></li>
                     <li class="dropdown d-block d-xl-none">
-                        <a a asp-page="/About"><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <a><span>Categories</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul class="categories-mobile-nav">
+                            @* =====[ Render By renderNavCategoriesMobile() in category-bar.js ]===== *@
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
+                            @if (userData != null)
+                            {
+                                <li><a href="/project/create">Create a project</a></li>
+                                <li><a href="/project">Join a project</a></li>
+                                <li><a href="/proposal/create">Create a proposal</a></li>
+                                <li><a href="/proposal">Hire a freelancer</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-page="/Authentication">Create a project</a></li>
+                                <li><a asp-page="/Authentication">Join a project</a></li>
+                                <li><a asp-page="/Authentication">Create a proposal</a></li>
+                                <li><a asp-page="/Authentication">Hire a freelancer</a></li>
+                            }
+                            @* <li class="dropdown">
+                            <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
                             <li><a href="#">Deep Dropdown 1</a></li>
                             <li><a href="#">Deep Dropdown 2</a></li>
                             <li><a href="#">Deep Dropdown 3</a></li>
                             <li><a href="#">Deep Dropdown 4</a></li>
                             <li><a href="#">Deep Dropdown 5</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="testimonials.html">Testimonials</a></li>
-                            <li class="dropdown">
-                                <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Dropdown 1</a></li>
-                                    <li><a href="#">Deep Dropdown 2</a></li>
-                                    <li><a href="#">Deep Dropdown 3</a></li>
-                                    <li><a href="#">Deep Dropdown 4</a></li>
-                                    <li><a href="#">Deep Dropdown 5</a></li>
-                                </ul>
-                            </li>
+                            </ul>
+                            </li> *@
                         </ul>
                     </li>
                     <li><a asp-page="/Pricing" class="@(currentPage == "/Pricing" ? "active" : "")">Pricing</a></li>
-                    <li><a asp-page="/Project/Index" class="@(currentPage == "/Project" ? "active" : "")">Projects</a></li>
+
+                    @* ============================[ Avatar / Get Start Button ]============================ *@
+                    @if (userData != null)
+                    {
+                        <li class="dropdown">
+                            <a href="#">
+                                <img src="@userData["avatar-url"]" alt="image" class="rounded-circle">
+                                <span style="margin-left:7px">@userData["name-tag"]</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a><!-- End Profile Image Icon -->
+
+                            <ul>
+                                @if (!userData["role"].ToString().ToLower().Equals("customer"))
+                                {
+                                    <li>
+                                        <a href="/Admin/Dashboard">
+                                            <i class="bi bi-graph-up" style="margin-right:10px"></i><span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="logout-button" asp-page="/Authentication" asp-page-handler="SignOut" style="justify-content:flex-start">
+                                            <i class="bi bi-box-arrow-right" style="margin-right:10px"></i><span>Sign Out</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="/accounts/detail" style="justify-content:flex-start">
+                                            <i class="bi bi-person" style="margin-right:10px"></i><span>Edit Account</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/proposal/detail" style="justify-content:flex-start">
+                                            <i class="bi bi-file-earmark-person" style="margin-right:10px"></i><span>My Proposals</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/project/employer" style="justify-content:flex-start">
+                                            <i class="bi bi-briefcase-fill" style="margin-right:10px"></i><span>My Projects</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/transaction" style="justify-content:flex-start">
+                                            <i class="bi bi-cash" style="margin-right:10px"></i><span>Transactions</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="logout-button" asp-page="/Authentication" asp-page-handler="SignOut" style="justify-content:flex-start">
+                                            <i class="bi bi-box-arrow-right" style="margin-right:10px"></i><span>Sign Out</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul><!-- End Profile Dropdown Items -->
+                        </li>
+                        <!-- End Profile Tab -->
+                    }
+                    else
+                    {
+                        <li>
+                            <a class="btn-getstarted" style="padding: 10px 15px; color:var(--contrast-color);"
+                            asp-page="/Authentication">Get Started</a>
+                        </li>
+                    }
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-
-            <a class="btn-getstarted" href="/Authentication">Login</a>
         </div>
 
 
@@ -97,8 +183,8 @@
 
                 <div class="categories-nav-wrapper">
                     <nav class="categories-navbar">
-                        <ul class="categories-list">
-                            @* =====[ Render By category-bar.js ]===== *@
+                        <ul class="categories-nav">
+                            @* =====[ Render By renderNavCategories() in category-bar.js ]===== *@
                         </ul>
                     </nav>
                 </div>
@@ -138,20 +224,21 @@
                     <ul>
                         <li><a asp-page="/Index">Home</a></li>
                         <li><a asp-page="/About">About us</a></li>
-                        <li><a href="#">Services</a></li>
+                        <li><a asp-page="/Pricing">Subscription</a></li>
+                        @* <li><a href="#">Services</a></li>
                         <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Privacy policy</a></li> *@
                     </ul>
                 </div>
 
                 <div class="col-lg-2 col-md-3 footer-links">
                     <h4>Our Services</h4>
                     <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
+                        <li><a href="/Categories?majorName=Programming & Tech">Programming & Tech</a></li>
+                        <li><a href="/Categories?majorName=Music & Audio">Music & Audio</a></li>
+                        <li><a href="/Categories?majorName=Business">Business</a></li>
+                        <li><a href="/Categories?majorName=Digital Marketing">Digital Marketing</a></li>
+                        <li><a href="/Categories?majorName=Graphics & Design">Graphics & Design</a></li>
                     </ul>
                 </div>
 

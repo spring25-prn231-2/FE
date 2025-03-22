@@ -16,23 +16,55 @@
 <div class="project-info">
     <span><strong>Bids:</strong> @Model.Project.Budget</span>
 </div>
-<div class="proposal-list">
-    @foreach (var proposal in Model.Proposals)
-    {
-        <div class="proposal-card">
-            <div class="freelancer-info">
-                @* <img src="@proposal.ProfileImageUrl" alt="@proposal.FreelancerName" class="avatar" /> *@
-                <div>
-                    <h4>@proposal.FreelancerName</h4>
+<div class="section container bg-primary">
+    <div class="project-header">
+        <h2>@Model.Project.Title</h2>
+        <ul class="nav-tabs">
+            <li><a href="/Project/details/@Model.Project.Id">Details</a></li>
+            <li class="active"><a asp-page="Proposals" asp-route-id="@Model.Project.Id">Proposals</a></li>
+        </ul>
+    </div>
+    <div class="project-details-container">
+        <div class="project-details">
+            <h4>Project details</h4>
+            @* <ul class="nav-tabs"> *@
+            @*     <li>$@Model.Project.Budget</li> *@
+            @*     <li>Bidding end in @Model.Project.Duration days</li> *@
+            @* </ul> *@
+            @foreach (var proposal in Model.Proposals)
+            {
+                <div class="proposal-card">
+                    <div class="freelancer-info">
+                        @* <img src="@proposal.ProfileImageUrl" alt="@proposal.FreelancerName" class="avatar" /> *@
+                        <div>
+                            <h4>@proposal.FreelancerName</h4>
+                        </div>
+                    </div>
+                    <div class="proposal-content">
+                        <p>@proposal.Description</p>
+                    </div>
+                    <div class="proposal-footer">
+                        <span class="bid-amount">$@proposal.Price USD</span>
+                        <span class="delivery-time">Deliver in @proposal.DeliveryTime days</span>
+                    </div>
                 </div>
-            </div>
-            <div class="proposal-content">
-                <p>@proposal.Description</p>
-            </div>
-            <div class="proposal-footer">
-                <span class="bid-amount">$@proposal.Price USD</span>
-                <span class="delivery-time">Deliver in @proposal.DeliveryTime days</span>
-            </div>
+            }
         </div>
+        <div class="about-the-client">
+            <h4>About the client</h4>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #fcfcfd;
     }
+
+    .bg-primary {
+        background-color: #fcfcfd !important; /* Custom orange */
+    }
+</style>
+<div class="proposal-list">
+    
 </div>

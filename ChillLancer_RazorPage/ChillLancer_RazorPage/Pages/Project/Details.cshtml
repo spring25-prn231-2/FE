@@ -10,7 +10,7 @@
         <h2>@Model.Project.Title</h2>
         <ul class="nav-tabs">
             <li><a asp-page="Details">Details</a></li>
-            <li class="active"><a asp-page="Proposals">Proposals</a></li>
+            <li class="active"><a href="/Project/Proposals?id=@Model.Project.Id">Proposals</a></li>
         </ul>
     </div>
     <div class ="project-details-container">
@@ -60,10 +60,17 @@
                     <input type="number" asp-for="Proposal.DeliveryTime" class="form-control" />
                     <span asp-validation-for="Proposal.DeliveryTime" class="text-danger"></span>
                 </div>
+                <h3>Request milestone payments </h3>
+                <p>Suggesting a milestone schedule for your client can make the project run smoothly by clearly outlining what needs to be done and when. </p>
+                <div class="proposal-milestones" id="milestones-container">
+
+                </div>
+                <button type="button" id="add-milestone" class="btn btn-secondary">Add Milestone</button>
                 <div class="form-group">
                     <input type="submit" value="Place bid" class="btn btn-primary" />
                 </div>
             </form>
+            <div id="milestone-error" class="text-danger"></div>
             @if (!ViewData.ModelState.IsValid)
             {
                 <div class="text-danger">
@@ -73,9 +80,7 @@
         </div>
     </div>
 </div>
-<div class="section container">
-    
-</div>
+
 <style>
     body{
         background-color: #fcfcfd;
@@ -84,3 +89,73 @@
         background-color: #fcfcfd !important; /* Custom orange */
     }
 </style>
+<script>
+    document.getElementById('add-milestone').addEventListener('click', function() {
+        let container = document.getElementById('milestones-container');
+        let index = container.children.length;
+
+        let milestoneHtml = `
+            <div class="milestone-item">
+                <label>Task Name</label>
+                <input type="text" name="Proposal.Processes[${index}].TaskName" class="form-control" required>
+
+                <label>Task Description</label>
+                <input type="text" name="Proposal.Processes[${index}].TaskDescription" class="form-control">
+
+                <label>Start Date</label>
+                <input type="date" name="Proposal.Processes[${index}].StartDate" class="form-control">
+
+                <label>End Date</label>
+                <input type="date" name="Proposal.Processes[${index}].EndDate" class="form-control">
+
+                <label>Cost</label>
+                <input type="number" name="Proposal.Processes[${index}].Cost" class="form-control" required>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', milestoneHtml);
+    });
+</script>
+<script>
+    let proposalPrice = @Model.Proposal.Price;
+    let milestones = [];
+
+    function addMilestone() {
+        let milestoneContainer = document.getElementById("milestone-container");
+        let milestoneIndex = milestones.length;
+
+        let newMilestone = document.createElement("div");
+        newMilestone.classList.add("milestone-item");
+        newMilestone.innerHTML = `
+            <label>Milestone ${milestoneIndex + 1} Price ($)</label>
+            <input type="number" class="form-control milestone-price"
+                   oninput="validateMilestones()" min="0">
+        `;
+
+        milestoneContainer.appendChild(newMilestone);
+        milestones.push(0); // Initialize with 0
+    }
+
+    function validateMilestones() {
+        let milestoneInputs = document.querySelectorAll(".milestone-price");
+        let totalMilestoneCost = 0;
+
+        milestoneInputs.forEach((input, index) => {
+            let cost = parseFloat(input.value) || 0;
+            milestones[index] = cost;
+            totalMilestoneCost += cost;
+        });
+
+        let remainingBalance = proposalPrice - totalMilestoneCost;
+        let errorDiv = document.getElementById("milestone-error");
+
+        if (remainingBalance < 0) {
+            errorDiv.textContent = "Total milestone cost exceeds proposal price!";
+            errorDiv.classList.add("alert", "alert-danger");
+        } else {
+            errorDiv.textContent = "";
+            errorDiv.classList.remove("alert", "alert-danger");
+        }
+    }
+</script>
+

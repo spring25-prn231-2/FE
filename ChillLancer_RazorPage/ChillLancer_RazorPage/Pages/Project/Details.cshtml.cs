@@ -56,13 +56,34 @@ namespace ChillLancer_RazorPage.Pages.Project
                 Proposal.FreelancerName = Client.FullName;
                 Proposal.AccountId = Client.Id;
                 Proposal.ProjectId = id;
+                foreach (var milestone in Proposal.Processes)
+                {
+                    milestone.Id = Guid.NewGuid();
+                    milestone.IsPaid = false;
+                    milestone.Status = "Draft";
+                }
+
                 var proposal = await _httpClient.PostAsJsonAsync(submitProposalAPI, Proposal);
-                //var response = await result.Content.ReadFromJsonAsync<ResponseModel>();
                 if (proposal.IsSuccessStatusCode)
                     return RedirectToPage();
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "An error occurred while submitting the form. ");
+                    var errorResponse = await proposal.Content.ReadAsStringAsync();
+                    string? errorMessage = errorResponse;
+                    try
+                    {
+                        var errorObj = JsonSerializer.Deserialize<JsonElement>(errorResponse);
+                        if (errorObj.TryGetProperty("ErrorMessage", out JsonElement messageElement))
+                        {
+                            errorMessage = messageElement.GetString();
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        Console.WriteLine("Error parsing API response.");
+                    }
+                    Console.WriteLine($"Error: {errorMessage}");
+                    ModelState.AddModelError(string.Empty, $"An error occurred while submitting the form: {errorMessage}");
                     await LoadProjectAsync(Id);
                     return Page();
                 }

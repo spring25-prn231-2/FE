@@ -19,10 +19,12 @@ namespace ChillLancer_RazorPage.Pages.Project
         [BindProperty]
         public ProposalModel Proposal { get; set; } = new();
         public AccountModel Client { get; set; } = new();
+        public AccountModel Employer { get; set; } = new();
         public async Task OnGetAsync(Guid Id)
         {
             this.Id = Id; // Store Id for reuse
             await LoadProjectAsync(Id);
+            await LoadEmployerInfoAsync(Id);
         }
         public async Task<IActionResult> OnPostAsync(Guid id)
         {
@@ -103,6 +105,15 @@ namespace ChillLancer_RazorPage.Pages.Project
 
             Project = result.IsSuccessStatusCode
                 ? await result.Content.ReadFromJsonAsync<ProjectModel>() ?? new()
+                : new();
+        }
+        private async Task LoadEmployerInfoAsync(Guid id)
+        {
+            string requestUrl = $"{EndpointConst.baseUrl}{EndpointConst.account}project/{id}";
+            var result = await _httpClient.GetAsync(requestUrl);
+
+            Employer = result.IsSuccessStatusCode
+                ? await result.Content.ReadFromJsonAsync<AccountModel>() ?? new()
                 : new();
         }
     }

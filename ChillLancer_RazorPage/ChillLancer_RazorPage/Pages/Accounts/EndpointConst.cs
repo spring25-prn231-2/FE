@@ -8,5 +8,6 @@ namespace ChillLancer_RazorPage.Pages.Accounts
         public const string account = "account/";
         public const string proposal = "proposal/";
         public const string project = "project/";
+        public const string milestone = "process/";
     }
 }

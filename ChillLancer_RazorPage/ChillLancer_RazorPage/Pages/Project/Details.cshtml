@@ -16,14 +16,19 @@
     <div class ="project-details-container">
         <div class="project-details">
             <h4>Project details</h4>
-            @* <ul class="nav-tabs"> *@
-            @*     <li>$@Model.Project.Budget</li> *@
-            @*     <li>Bidding end in @Model.Project.Duration days</li> *@
-            @* </ul> *@
-        <p>@Model.Project.Description</p>
+            <ul class="nav-tabs">
+                <li>Project budget: $@Model.Project.Budget.ToString("0.##")</li>
+            </ul>
+            <p>@Model.Project.Description</p>
         </div>
         <div class="about-the-client">
             <h4>About the client</h4>
+            <ul>
+                <li>@Model.Employer.FullName</li>
+                <li>@Model.Employer.National</li>
+                <li>@Model.Employer.Email</li>
+                <li>@Model.Employer.PhoneNumber</li>
+            </ul>
         </div>
         <div class="project-details">
             <h4>Place a bid on this project</h4>

@@ -25,6 +25,7 @@ namespace ChillLancer_RazorPage.Models
 
         [JsonPropertyName("end-date")]
         public DateTime EndDate { get; set; }
+        public int Duration { get; set; } = 1;
 
         [JsonPropertyName("requirement-note")]
         public string RequirementNote { get; set; }
@@ -59,6 +60,7 @@ namespace ChillLancer_RazorPage.Models
         public DateTime? StartDate { get; set; }
         [JsonPropertyName("end-date")]
         public DateTime? EndDate { get; set; }
+        public int Duration { get; set; } = 1;
         [JsonPropertyName("requirement-note")]
         public string? RequirementNote { get; set; }
         [Required]

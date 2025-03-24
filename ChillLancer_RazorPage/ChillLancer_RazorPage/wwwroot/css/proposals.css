@@ -77,13 +77,13 @@
     align-items: flex-start;
     display: flex;
     flex-flow: row wrap;
-    max-width: 1200px;
+    max-width: 100%;
+    column-gap: 1rem;
 }
 .project-details {
-    flex-basis: 75%;
-    width: 75%;
+    flex-basis: 70%;
+    width: 100%;
     padding: 2rem;
-/*    border: 1px solid;*/
     box-shadow: 0 1px 2px #12151b40;
     border-radius: 5px;
     background: #fff;
@@ -91,5 +91,44 @@
 .about-the-client {
     flex-basis: 25%;
     width: 25%;
-    padding: 0 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 2px #12151b40;
+    border-radius: 5px;
+    background: #fff;
+}
+
+
+
+.milestone-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.milestone-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    flex: 1 1 200px; /* min width 200px */
+    max-width: 250px;
+}
+
+    .milestone-card h5 {
+        margin-bottom: 0.5rem;
+    }
+
+    .milestone-card p {
+        margin-bottom: 0.5rem;
+    }
+
+.total-cost {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.accepted-text {
+    color: #28a745; /* green color */
+    font-weight: bold;
+    margin-left: 0.5rem;
 }

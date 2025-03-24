@@ -6,16 +6,6 @@
 
 <link rel="stylesheet" href="/css/proposals.css" />
 
-<div class="project-header">
-    <h2>@Model.Project.Title</h2>
-    <ul class="nav-tabs">
-        <li><a asp-page="Details">Details</a></li>
-        <li class="active"><a asp-page="Proposals">Proposals</a></li>
-    </ul>
-</div>
-<div class="project-info">
-    <span><strong>Bids:</strong> @Model.Project.Budget</span>
-</div>
 <div class="section container bg-primary">
     <div class="project-header">
         <h2>@Model.Project.Title</h2>
@@ -27,10 +17,9 @@
     <div class="project-details-container">
         <div class="project-details">
             <h4>Project details</h4>
-            @* <ul class="nav-tabs"> *@
-            @*     <li>$@Model.Project.Budget</li> *@
-            @*     <li>Bidding end in @Model.Project.Duration days</li> *@
-            @* </ul> *@
+            <ul class="nav-tabs">
+                <li>Project budget: $@Model.Project.Budget.ToString("0.##")</li>
+            </ul> 
             @foreach (var proposal in Model.Proposals)
             {
                 <div class="proposal-card">
@@ -44,14 +33,67 @@
                         <p>@proposal.Description</p>
                     </div>
                     <div class="proposal-footer">
-                        <span class="bid-amount">$@proposal.Price USD</span>
+                        <span class="bid-amount">$@proposal.Price.ToString("0") USD</span>
                         <span class="delivery-time">Deliver in @proposal.DeliveryTime days</span>
+                        <button class="btn" type="button" onclick="viewMilestones('@proposal.Id')">
+                            View Milestones
+                        </button>
+                        @* If already accepted, show "Accepted" text *@
+                        @if (proposal.Status.Equals("ACCEPTED"))
+                        {
+                            <span id="acceptedText-@proposal.Id" class="accepted-text">
+                                Proposal Accepted
+                            </span>
+                        }
+                        else
+                        {
+                            @* If the user can still accept proposals (not accepted yet, user is logged in & owner, etc.) *@
+                            if (Model.IsUserLoggedIn
+                            && Model.Employer.Id == Model.CurrentUserId
+                            && !Model.HasAcceptedProposal)
+                            {
+                                <button type="button"
+                                        id="acceptButton-@proposal.Id"
+                                        class="btn btn-primary btn-sm"
+                                        onclick="acceptProposal('@proposal.Id')">
+                                    Accept
+                                </button>
+
+                                <span id="acceptedText-@proposal.Id"
+                                      class="accepted-text d-none">
+                                    Accepted
+                                </span>
+                            }
+                        }
+                        <div id="milestones-container-@proposal.Id" class="milestones-container"></div>
                     </div>
                 </div>
             }
         </div>
         <div class="about-the-client">
             <h4>About the client</h4>
+            <ul>
+                <li>@Model.Employer.FullName</li>
+                <li>@Model.Employer.National</li>
+                <li>@Model.Employer.Email</li>
+                <li>@Model.Employer.PhoneNumber</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="milestoneModal" tabindex="-1" aria-labelledby="milestoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="milestoneModalLabel">Milestones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="milestoneModalBody">
+                <!-- We will inject the milestone cards here via JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
@@ -65,6 +107,126 @@
         background-color: #fcfcfd !important; /* Custom orange */
     }
 </style>
-<div class="proposal-list">
-    
-</div>
+@section Scripts {
+    @* <script> *@
+    @*     let milestoneModal; *@
+    @*         document.addEventListener('DOMContentLoaded', () => { *@
+    @*             // Create a modal instance after the DOM is loaded *@
+    @*             const modalElement = document.getElementById('milestoneModal'); *@
+    @*             milestoneModal = new bootstrap.Modal(modalElement, {}); *@
+    @*         }); *@
+    @*     async function viewMilestones(proposalId) { *@
+    @*         // Identify the container for this specific proposal *@
+    @*         //const container = document.getElementById(`milestones-container-${proposalId}`); *@
+    @*         const milestoneModalBody = document.getElementById("milestoneModalBody"); *@
+    @*         milestoneModalBody.innerHTML = "<p>Loading milestones...</p>"; *@
+    @*         milestoneModal.show(); *@
+
+    @*         // Show a loading message/spinner *@
+    @*         //container.innerHTML = "Loading milestones..."; *@
+            
+
+    @*         try { *@
+    @*             // Send GET request to your endpoint (adjust the URL to your routing) *@
+    @*             const response = await fetch(`https://localhost:7225/api/process?id=${proposalId}`, { *@
+    @*                 method: 'GET' *@
+    @*             }); *@
+
+    @*             if (response.status === 404) { *@
+    @*                 // If 404, that means "No milestones found" *@
+    @*                 milestoneModalBody.innerHTML = "This proposal does not have milestones."; *@
+    @*                 return; *@
+    @*             } *@
+
+    @*             if (!response.ok) { *@
+    @*                 // Handle other possible errors *@
+    @*                 milestoneModalBody.innerHTML = "Error fetching milestones."; *@
+    @*                 return; *@
+    @*             } *@
+
+    @*             // If response is ok, parse JSON *@
+    @*             const data = await response.json(); *@
+
+    @*             // data is presumably an array of milestone objects *@
+    @*             if (!Array.isArray(data) || data.length === 0) { *@
+    @*                 milestoneModalBody.innerHTML = "<p>This proposal does not have milestones.</p>"; *@
+    @*                 return; *@
+    @*             } *@
+    @*             let milestoneHtml = '<div class="milestone-cards-container">'; *@
+    @*             data.forEach(milestone => { *@
+    @*                 const taskName = milestone["task-name"] ?? "Untitled"; *@
+    @*                 const taskDescription = milestone["task-description"] ?? ""; *@
+    @*                 const cost = milestone.cost ?? 0; *@
+
+    @*                 milestoneHtml += ` *@
+    @*                     <div class="milestone-card"> *@
+    @*                         <h5>${taskName}</h5> *@
+    @*                         <p>${taskDescription}</p> *@
+    @*                         <p><strong>$${cost}</strong></p> *@
+    @*                     </div> *@
+    @*                 `; *@
+    @*             }); *@
+    @*             milestoneHtml += "</div>"; *@
+
+    @*             // Calculate total cost *@
+    @*             const totalCost = data.reduce((acc, m) => acc + (m.cost || 0), 0); *@
+    @*             // Append total cost at the bottom *@
+    @*             milestoneHtml += `<div class="total-cost">Total: $${totalCost}</div>`; *@
+    @*             // Update the modal body *@
+    @*             milestoneModalBody.innerHTML = milestoneHtml; *@
+    @*         } catch (error) { *@
+    @*             // Catch network errors or other issues *@
+    @*             console.error(error); *@
+    @*             milestoneModalBody.innerHTML = "Something went wrong while fetching milestones."; *@
+    @*         } *@
+    @*     } *@
+    @*      async function acceptProposal(proposalId) { *@
+    @*         if (isAccepting) return; *@
+    @*         isAccepting = true; *@
+
+    @*         // Identify the specific button and "Accepted" span *@
+    @*         const button = document.getElementById(`acceptButton-${proposalId}`); *@
+    @*         const acceptedTextSpan = document.getElementById(`acceptedText-${proposalId}`); *@
+
+    @*         // Show loading state on the button *@
+    @*         button.disabled = true; *@
+    @*         button.innerText = "Accepting..."; *@
+
+    @*         // Build the PATCH endpoint URL *@
+    @*         const requestUrl = `${baseUrl}${proposalEndpoint}${proposalId}`; *@
+
+    @*         try { *@
+    @*             const response = await fetch(requestUrl, { *@
+    @*                 method: 'PATCH' *@
+    @*             }); *@
+
+    @*             if (response.ok) { *@
+    @*                 // The proposal is accepted *@
+    @*                 // 1) Hide ALL accept buttons *@
+    @*                 const allAcceptButtons = document.querySelectorAll('[id^="acceptButton-"]'); *@
+    @*                 allAcceptButtons.forEach(btn => { *@
+    @*                     btn.style.display = "none"; *@
+    @*                 }); *@
+
+    @*                 // 2) Show "Accepted" text for this specific proposal *@
+    @*                 acceptedTextSpan.classList.remove("d-none"); *@
+    @*             } else { *@
+    @*                 // Something went wrong on the server side *@
+    @*                 alert("Failed to accept proposal. Server error."); *@
+    @*                 // Reset the button state *@
+    @*                 button.disabled = false; *@
+    @*                 button.innerText = "Accept"; *@
+    @*             } *@
+    @*         } catch (error) { *@
+    @*             console.error(error); *@
+    @*             alert("Network error while accepting proposal."); *@
+    @*             // Reset the button state *@
+    @*             button.disabled = false; *@
+    @*             button.innerText = "Accept"; *@
+    @*         } finally { *@
+    @*             isAccepting = false; *@
+    @*         } *@
+    @*     } *@
+    @* </script> *@
+    <script src="~/js/proposal.js"></script>
+}

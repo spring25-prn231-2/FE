@@ -1,0 +1,32 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Payment.PaymentConfirmationModel
+@{
+    ViewData["Title"] = "Payment comfirm";
+}
+
+<h2>Payment confirm</h2>
+
+<div>
+    <h4>Order Information</h4>
+    <div>
+        <label><b>Name:</b></label>
+        <span>@Model.process.TaskName</span>
+    </div>
+    <div>
+        <label><b>Deadline:</b></label>
+        <span>@Model.process.EndDate</span>
+    </div>
+    <div>
+        <label><b>Cost:</b></label>
+        <span>@Model.process.Cost</span>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    Please check again before payment.
+</div>
+
+<form method="post">
+    <button type="submit" class="btn btn-primary">pay</button>
+    <a asp-page="/Index" class="btn btn-secondary">back </a>
+</form>

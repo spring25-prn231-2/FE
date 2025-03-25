@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 public class MilestoneModel
 {
     [Key]
+    [JsonPropertyName("id")]
     public Guid Id { get; set; } = Guid.NewGuid();
     [JsonPropertyName("task-name")]
     public string TaskName { get; set; } = null!;

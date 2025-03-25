@@ -25,7 +25,7 @@ async function viewMilestones(proposalId) {
 
     try {
         // Send GET request to your endpoint (adjust the URL to your routing)
-        const response = await fetch(`https://localhost:7225/api/process?id=${proposalId}`, {
+        const response = await fetch(`https://localhost:7225/api/process/proposalId/${proposalId}`, {
             method: 'GET'
         });
 
@@ -51,17 +51,32 @@ async function viewMilestones(proposalId) {
         }
         let milestoneHtml = '<div class="milestone-cards-container">';
         data.forEach(milestone => {
+            const processId = milestone["id"];
+            const status = milestone["status"] ?? "";
             const taskName = milestone["task-name"] ?? "Untitled";
             const taskDescription = milestone["task-description"] ?? "";
             const cost = milestone.cost ?? 0;
-
+            if (status == "Paid") {
+                milestoneHtml += `
+                        <div class="milestone-card">
+                            <h5>${taskName}</h5>
+                            <p>${taskDescription}</p>
+                            <p><strong>$${cost}</strong></p>
+                            <p style="color: green;">PAID</p>
+                        </div>
+                    `;
+            } else {
             milestoneHtml += `
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
                             <p>${taskDescription}</p>
                             <p><strong>$${cost}</strong></p>
+                            <button class="btn"  style="border: 2px solid black; padding: 10px; border-radius: 5px;" type="button" onclick="saveProcessIdAndRedirect('${processId}')">
+                                pay
+                            </button>
                         </div>
                     `;
+            }
         });
         milestoneHtml += "</div>";
 
@@ -134,4 +149,7 @@ async function acceptProposal(proposalId) {
     } finally {
         isAccepting = false;
     }
+}
+async function saveProcessIdAndRedirect(processId) {
+       window.location.href = "../Payment/PaymentConfirmation?processId=" + processId; 
 }

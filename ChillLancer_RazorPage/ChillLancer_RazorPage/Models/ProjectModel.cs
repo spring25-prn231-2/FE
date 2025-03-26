@@ -68,5 +68,7 @@ namespace ChillLancer_RazorPage.Models
         public Guid categoryId { get; set; }
         [JsonPropertyName("skill-ids")]
         public ICollection<Guid>? skillIds { get; set; }
+        [JsonPropertyName("employer-id")]
+        public Guid? EmployerId { get; set; }
     }
 }

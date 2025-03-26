@@ -61,7 +61,7 @@ async function viewMilestones(proposalId) {
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
                             <p>${taskDescription}</p>
-                            <p><strong>$${cost}</strong></p>
+                            <p><strong>${cost} VND</strong></p>
                             <p style="color: green;">PAID</p>
                         </div>
                     `;
@@ -70,7 +70,7 @@ async function viewMilestones(proposalId) {
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
                             <p>${taskDescription}</p>
-                            <p><strong>$${cost}</strong></p>
+                            <p><strong>${cost}VND</strong></p>
                             <button class="btn"  style="border: 2px solid black; padding: 10px; border-radius: 5px;" type="button" onclick="saveProcessIdAndRedirect('${processId}')">
                                 pay
                             </button>

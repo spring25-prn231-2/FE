@@ -46,7 +46,10 @@ namespace ChillLancer_RazorPage.Pages.Project
             //        ? await result.Content.ReadFromJsonAsync<ProjectModel>() ?? new() : new();
             // first new() is if api called successed but return null then an empty object will still be returned instead of null which might cause error
             //second new() is if api called failed then an empty object will also be initialized to avoid null object error
+
+            
         }
+
         private async Task LoadEmployerInfoAsync(Guid id)
         {
             string requestUrl = $"{EndpointConst.baseUrl}{EndpointConst.account}project/{id}";
@@ -55,6 +58,7 @@ namespace ChillLancer_RazorPage.Pages.Project
             Employer = result.IsSuccessStatusCode
                 ? await result.Content.ReadFromJsonAsync<AccountModel>() ?? new()
                 : new();
+            
         }
         private async Task CheckAcceptedProposalAsync(Guid id)
         {

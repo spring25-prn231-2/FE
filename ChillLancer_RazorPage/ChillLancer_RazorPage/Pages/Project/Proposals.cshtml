@@ -22,6 +22,8 @@
             </ul> 
             @foreach (var proposal in Model.Proposals)
             {
+                bool isProjectOwner = @Model.CurrentUserId == @Model.Employer.Id;
+                bool isProposalOwner = @Model.CurrentUserId == proposal.AccountId;
                 <div class="proposal-card">
                     <div class="freelancer-info">
                         @* <img src="@proposal.ProfileImageUrl" alt="@proposal.FreelancerName" class="avatar" /> *@
@@ -35,9 +37,12 @@
                     <div class="proposal-footer">
                         <span class="bid-amount">@proposal.Price.ToString("0") VND</span>
                         <span class="delivery-time">Deliver in @proposal.DeliveryTime days</span>
-                        <button class="btn" type="button" onclick="viewMilestones('@proposal.Id')">
-                            View Milestones
-                        </button>
+                        @if (isProjectOwner || isProposalOwner)
+                        {
+                            <button class="btn" type="button" onclick="viewMilestones('@proposal.Id')">
+                                View Milestones
+                            </button>
+                        }
                         @* If already accepted, show "Accepted" text *@
                         @if (proposal.Status.Equals("ACCEPTED"))
                         {

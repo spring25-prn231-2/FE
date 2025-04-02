@@ -55,12 +55,16 @@ async function viewMilestones(proposalId) {
             const status = milestone["status"] ?? "";
             const taskName = milestone["task-name"] ?? "Untitled";
             const taskDescription = milestone["task-description"] ?? "";
-            const cost = milestone.cost ?? 0;
+            const startDate = formatDate(milestone["start-date"]) ?? "Client haven't set yet";
+            const endDate = formatDate(milestone["end-date"]) ?? "Client haven't set yet";
+            const cost = formatCost(milestone.cost ?? 0);
             if (status == "Paid") {
                 milestoneHtml += `
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
                             <p>${taskDescription}</p>
+                            <p>Start date: ${startDate}</p>
+                            <p>End date: ${endDate}</p>
                             <p><strong>${cost} VND</strong></p>
                             <p style="color: green;">PAID</p>
                         </div>
@@ -70,6 +74,8 @@ async function viewMilestones(proposalId) {
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
                             <p>${taskDescription}</p>
+                            <p>Start date: ${startDate}</p>
+                            <p>End date: ${endDate}</p>
                             <p><strong>${cost}VND</strong></p>
                             <button class="btn"  style="border: 2px solid black; padding: 10px; border-radius: 5px;" type="button" onclick="saveProcessIdAndRedirect('${processId}')">
                                 pay
@@ -83,7 +89,7 @@ async function viewMilestones(proposalId) {
         // Calculate total cost
         const totalCost = data.reduce((acc, m) => acc + (m.cost || 0), 0);
         // Append total cost at the bottom
-        milestoneHtml += `<div class="total-cost">Total: $${totalCost}</div>`;
+        milestoneHtml += `<div class="total-cost">Total: ${formatCost(totalCost)}</div>`;
         // Update the modal body
         milestoneModalBody.innerHTML = milestoneHtml;
     } catch (error) {
@@ -152,4 +158,17 @@ async function acceptProposal(proposalId) {
 }
 async function saveProcessIdAndRedirect(processId) {
        window.location.href = "../Payment/PaymentConfirmation?processId=" + processId; 
+}
+
+function formatDate(dateString) {
+    if (!dateString) return "unknown"; // Return empty string if no valid date
+
+    const date = new Date(dateString);
+    if (isNaN(date)) return "unknown"; // Return empty if the date is invalid
+
+    const options = { year: "numeric", month: "long", day: "2-digit" };
+    return date.toLocaleDateString("en-GB", options).replace(" ", "-").replace(" ", "-");
+}
+function formatCost(amount) {
+    return new Intl.NumberFormat("vi-VN").format(amount) + "đ";
 }

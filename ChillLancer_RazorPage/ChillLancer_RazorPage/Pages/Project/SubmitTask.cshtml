@@ -1,0 +1,96 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Project.SubmitTaskModel
+@{
+}
+<h1>Submit Task</h1>
+
+@if (!string.IsNullOrEmpty(Model.WarningMessage))
+{
+    <div style="color: red; font-weight: bold;">
+        @Model.WarningMessage
+    </div>
+}
+
+<!-- Menu with three options -->
+<div class="menu">
+    <button onclick="showContent('image')" class="active">Image</button>
+    <button onclick="showContent('link')">Link</button>
+    <button onclick="showContent('text')">Text</button>
+</div>
+
+<!-- Content areas for each option -->
+<div id="image-content" class="content active">
+    <h2>Upload an Image</h2>
+    <form method="post" enctype="multipart/form-data" asp-page-handler="uploadImage">
+        <input type="file" name="imageFile" accept="image/*" />
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<div id="link-content" class="content">
+    <h2>Submit a Link</h2>
+    <form method="post" asp-page-handler="uploadLink">
+        <input type="url" name="link" placeholder="Enter URL" style="width: 50%" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="text-content" class="content">
+    <h2>Submit Text</h2>
+    <form method="post" asp-page-handler="uploadText">
+        <textarea name="text" rows="5" placeholder="Enter your text here" style="width: 100%"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    // JavaScript to handle menu switching
+    function showContent(type) {
+        // Remove active class from all buttons and content
+        document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+
+        // Add active class to the clicked button and corresponding content
+        document.querySelector(`button[onclick="showContent('${type}')"]`).classList.add('active');
+        document.getElementById(`${type}-content`).classList.add('active');
+    }
+
+</script>
+<style>
+    /* Basic styling for the menu */
+    .menu {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+        .menu button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+
+            .menu button:hover {
+                background-color: #ddd;
+            }
+
+            .menu button.active {
+                background-color: #007bff;
+                color: white;
+            }
+
+    /* Content area styling */
+    .content {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        display: none;
+    }
+
+        .content.active {
+            display: block;
+        }
+</style>

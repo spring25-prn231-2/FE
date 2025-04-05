@@ -1,0 +1,58 @@
+﻿@page
+@model ChillLancer_RazorPage.Pages.Project.ProcessModel
+@{
+}
+        <a class="card-container" style="color:black">
+            <h4>Process details</h4>
+        <h2>@Model.process.TaskName</h2>
+            <ul class="nav-tabs">
+                <li>Project budget: @Model.process.Cost.ToString("0.##") VND</li>
+                <li>Time: @(Model.process.StartDate != null ? Model.process.StartDate : "") - @(Model.process.EndDate != null ? Model.process.StartDate : "")</li>
+                <li>Description: @(Model.process.TaskDescription ?? "")</li>
+            </ul>
+        </a>
+<div style="color:black; margin-left:30px; margin-right: 30px; border: 2px solid gray; display:flex; flex-direction:column;">
+<h5> Submission:</h5>
+    @{
+        if (Model.process.Note != "" && Model.process.Note != null)
+        {
+            if (Model.process.Note.Substring(0, 5) != "Image")
+            {
+                <h5>@Model.process.Note</h5>    
+            }
+            else
+            {
+                <img src="data:image/jpeg;base64,@Model.process.Note.Replace("Image: ", "")" alt="Submitted Image" style="max-width: 400px;" />
+            }
+            if (Model.userRole == "Employer")
+            {
+                if (Model.process.Status == "Paid")
+                {
+                    <h5 style="color: green">DONE</h5>
+                } else
+                {
+                    <a style="border:1px solid green; color:green; padding: 1px; margin: 1px; width: fit-content; font-size: 20px;" href="/Payment/PaymentConfirmation?processId=@Model.process.Id">Pay</a>
+                }
+            }
+            if (Model.userRole == "Freelancer")
+            {
+                if (Model.process.Status == "Paid")
+                {
+                    <h5 style="color: green">DONE</h5>
+                }
+                else
+                {
+                    <a style="border:1px solid green; color:green; padding: 1px; margin: 1px; width: fit-content; font-size: 20px;" href="/project/submitTask?processId=@Model.process.Id">Edit subission</a>
+                }
+            }
+        }
+    else
+    {
+        <a style="border:1px solid green; color:green; padding: 1px" href="/project/submitTask?processId=@Model.process.Id">Add Submission</a>
+    }
+}
+</div>
+<div style="margin:5px">
+    <a style="border:1px solid green; color:green; padding: 1px" href="/Payment/PaymentConfirmation?processId=@Model.process.Id">Pay</a>
+    <a style="border:1px solid black; color:black; padding: 1px" href="/project">back to list</a>
+</div>

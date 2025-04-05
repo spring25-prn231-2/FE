@@ -10,6 +10,7 @@
         profileResponse = JObject.Parse(profileJson);
     }
     var userData = profileResponse?["value"]?["data"];
+    var role = userData?["role"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -75,17 +76,19 @@
                         <ul>
                             @if (userData != null)
                             {
-                                <li><a href="/project/create">Create a project</a></li>
-                                <li><a href="/project">Join a project</a></li>
-                                <li><a href="/proposal/create">Create a proposal</a></li>
-                                <li><a href="/proposal">Hire a freelancer</a></li>
+                                if (role == "Employer")
+                                {
+                                    <li><a href="/project/create">Create a project</a></li>
+                                    <li><a href="/project">view project</a></li>
+                                } else {
+                                <li><a href="/project">view project</a></li>
+                                //<li><a href="/proposal/create">Create a proposal</a></li>
+                                }
                             }
                             else
                             {
                                 <li><a asp-page="/Authentication">Create a project</a></li>
                                 <li><a asp-page="/Authentication">Join a project</a></li>
-                                <li><a asp-page="/Authentication">Create a proposal</a></li>
-                                <li><a asp-page="/Authentication">Hire a freelancer</a></li>
                             }
                             @* <li class="dropdown">
                             <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>

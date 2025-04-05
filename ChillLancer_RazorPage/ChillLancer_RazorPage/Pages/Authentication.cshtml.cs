@@ -77,12 +77,8 @@ namespace ChillLancer_RazorPage.Pages
                         using (JsonDocument doc = JsonDocument.Parse(profileJson))
                         {
                             var role = doc.RootElement.GetProperty("value").GetProperty("data").GetProperty("role").GetString();
-
-                            if (role == "Customer")
-                            {
-                                return Redirect("/"); // Homepage
-                            }
-                            return RedirectToPage("/admin/dashboard"); //Admin page
+                            _httpContextAccessor.HttpContext?.Session.SetString("UserRole", role);
+                            return Redirect("/");
                         }
                     }
                 }

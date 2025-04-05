@@ -52,13 +52,14 @@ async function viewMilestones(proposalId) {
         let milestoneHtml = '<div class="milestone-cards-container">';
         data.forEach(milestone => {
             const processId = milestone["id"];
-            const status = milestone["status"] ?? "";
+            const status = milestone["status"] ?? ""
+            const note = milestone["note"] ?? "";
             const taskName = milestone["task-name"] ?? "Untitled";
             const taskDescription = milestone["task-description"] ?? "";
             const startDate = formatDate(milestone["start-date"]) ?? "Client haven't set yet";
             const endDate = formatDate(milestone["end-date"]) ?? "Client haven't set yet";
             const cost = formatCost(milestone.cost ?? 0);
-            if (status == "Paid") {
+            if ((note != "") && (status != "Paid") ) {
                 milestoneHtml += `
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
@@ -66,11 +67,14 @@ async function viewMilestones(proposalId) {
                             <p>Start date: ${startDate}</p>
                             <p>End date: ${endDate}</p>
                             <p><strong>${cost} VND</strong></p>
-                            <p style="color: green;">PAID</p>
+                            <p style="color:green">*A submission await to check</p>
+                            <button class="btn"  style="border: 2px solid black; padding: 10px; border-radius: 5px;" type="button" onclick="saveProcessIdAndRedirect('${processId}')">
+                                View Detail
+                            </button>
                         </div>
                     `;
             } else {
-            milestoneHtml += `
+                milestoneHtml += `
                         <div class="milestone-card">
                             <h5>${taskName}</h5>
                             <p>${taskDescription}</p>
@@ -78,7 +82,7 @@ async function viewMilestones(proposalId) {
                             <p>End date: ${endDate}</p>
                             <p><strong>${cost}VND</strong></p>
                             <button class="btn"  style="border: 2px solid black; padding: 10px; border-radius: 5px;" type="button" onclick="saveProcessIdAndRedirect('${processId}')">
-                                pay
+                                View Detail
                             </button>
                         </div>
                     `;
@@ -157,7 +161,7 @@ async function acceptProposal(proposalId) {
     }
 }
 async function saveProcessIdAndRedirect(processId) {
-       window.location.href = "../Payment/PaymentConfirmation?processId=" + processId; 
+       window.location.href = "../Project/process?processId=" + processId; 
 }
 
 function formatDate(dateString) {
